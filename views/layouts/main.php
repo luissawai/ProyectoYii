@@ -38,13 +38,13 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],    
+            ['label' => 'Personajes', 'url' => ['/personajes/index']],
             ['label' => 'Clases', 'url' => ['/clases/index']],
             ['label' => 'Juegan', 'url' => ['/juegan/index']],
             ['label' => 'Juegos', 'url' => ['/juegos/index']],
             ['label' => 'Jugadores', 'url' => ['/jugadores/index']],
             ['label' => 'Modulos', 'url' => ['/modulos/index']],
-            ['label' => 'Partidas', 'url' => ['/Partidas/index']],
-            ['label' => 'Personajes', 'url' => ['/Personajes/index']],
+            ['label' => 'Partidas', 'url' => ['/partidas/index']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
             ['label' => 'About', 'url' => ['/site/about']],
             Yii::$app->user->isGuest ? (

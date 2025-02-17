@@ -9,7 +9,7 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Juegans';
+$this->title = 'Juegan';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="juegan-index">
@@ -24,8 +24,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'idjuegan',
             'idpartidas',
             'idjugadores',

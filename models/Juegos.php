@@ -31,9 +31,10 @@ class Juegos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre'], 'string', 'max' => 30],
-            [['tematica'], 'string', 'max' => 50],
-            [['edicion'], 'string', 'max' => 10],
+            [['nombre', 'tematica'], 'required', 'message' => 'Este campo no puede estar vacío.'],
+            [['nombre'], 'unique', 'message' => 'El nombre del juego ya está registrado.'],
+            [['nombre', 'tematica'], 'string', 'max' => 30, 'tooLong' => 'Máximo 30 caracteres permitidos.'],
+            [['edicion'], 'string', 'max' => 10, 'tooLong' => 'Máximo 10 caracteres permitidos.'],
         ];
     }
 

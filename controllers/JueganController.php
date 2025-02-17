@@ -2,14 +2,16 @@
 
 namespace app\controllers;
 
-use app\models\juegan;
+use app\models\Juegan;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\db\IntegrityException;
+use Yii;
 
 /**
- * JueganController implements the CRUD actions for juegan model.
+ * JueganController implements the CRUD actions for Juegan model.
  */
 class JueganController extends Controller
 {
@@ -32,14 +34,14 @@ class JueganController extends Controller
     }
 
     /**
-     * Lists all juegan models.
+     * Lists all Juegan models.
      *
      * @return string
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => juegan::find(),
+            'query' => Juegan::find(),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -58,7 +60,7 @@ class JueganController extends Controller
     }
 
     /**
-     * Displays a single juegan model.
+     * Displays a single Juegan model.
      * @param int $idjuegan Idjuegan
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -71,17 +73,30 @@ class JueganController extends Controller
     }
 
     /**
-     * Creates a new juegan model.
+     * Creates a new Juegan model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new juegan();
+        $model = new Juegan();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'idjuegan' => $model->idjuegan]);
+            if ($model->load($this->request->post())) {
+                try {
+                    if ($model->save()) {
+                        Yii::$app->session->setFlash('success', 'Registro creado exitosamente.');
+                        return $this->redirect(['view', 'idjuegan' => $model->idjuegan]);
+                    } else {
+                        Yii::$app->session->setFlash('error', 'Error al guardar el registro.');
+                    }
+                } catch (IntegrityException $e) {
+                    // Captura la excepción de violación de integridad (duplicado)
+                    Yii::$app->session->setFlash('error', 'El registro ya existe. Por favor, intente con valores diferentes.');
+                } catch (\Exception $e) {
+                    // Captura cualquier otra excepción
+                    Yii::$app->session->setFlash('error', 'Ocurrió un error inesperado. Por favor, intente nuevamente.');
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -93,7 +108,7 @@ class JueganController extends Controller
     }
 
     /**
-     * Updates an existing juegan model.
+     * Updates an existing Juegan model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $idjuegan Idjuegan
      * @return string|\yii\web\Response
@@ -113,7 +128,7 @@ class JueganController extends Controller
     }
 
     /**
-     * Deletes an existing juegan model.
+     * Deletes an existing Juegan model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $idjuegan Idjuegan
      * @return \yii\web\Response
@@ -127,15 +142,15 @@ class JueganController extends Controller
     }
 
     /**
-     * Finds the juegan model based on its primary key value.
+     * Finds the Juegan model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $idjuegan Idjuegan
-     * @return juegan the loaded model
+     * @return Juegan the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($idjuegan)
     {
-        if (($model = juegan::findOne(['idjuegan' => $idjuegan])) !== null) {
+        if (($model = Juegan::findOne(['idjuegan' => $idjuegan])) !== null) {
             return $model;
         }
 

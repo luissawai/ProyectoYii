@@ -29,12 +29,11 @@ class Juegan extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        return [
-            [['idpartidas', 'idjugadores'], 'integer'],
-            [['idpartidas', 'idjugadores'], 'unique', 'targetAttribute' => ['idpartidas', 'idjugadores']],
-            [['idjugadores'], 'exist', 'skipOnError' => true, 'targetClass' => Jugadores::class, 'targetAttribute' => ['idjugadores' => 'idjugadores']],
-            [['idpartidas'], 'exist', 'skipOnError' => true, 'targetClass' => Partidas::class, 'targetAttribute' => ['idpartidas' => 'idpartidas']],
-        ];
+            return [
+                [['idpartidas', 'idjugadores'], 'required'],
+                [['idpartidas'], 'exist', 'targetClass' => Partidas::class, 'targetAttribute' => 'idpartidas', 'message' => 'Este nombre ya está registrado.'],
+                [['idjugadores'], 'exist', 'targetClass' => Jugadores::class, 'targetAttribute' => 'idjugadores', 'message' => 'Este nombre ya está registrado.'],
+            ];
     }
 
     /**

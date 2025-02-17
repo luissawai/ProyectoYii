@@ -28,13 +28,15 @@ class Jugadores extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
-        return [
-            [['nombre'], 'string', 'max' => 30],
-            [['rol'], 'string', 'max' => 20],
-        ];
-    }
+public function rules()
+{
+    return [
+        [['nombre', 'rol'], 'required'],
+        [['nombre'], 'unique', 'message' => 'Este nombre ya está registrado.'],
+        [['rol'], 'in', 'range' => ['jugador', 'master', 'NPC'], 'message' => 'El rol debe ser "jugador", "master" o "NPC".'],
+        [['nombre'], 'string', 'max' => 30],
+    ];
+}
 
     /**
      * {@inheritdoc}

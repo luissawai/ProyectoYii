@@ -32,15 +32,15 @@ class Partidas extends \yii\db\ActiveRecord
      * {@inheritdoc}
      */
     public function rules()
-    {
-        return [
-            [['idjuegos'], 'integer'],
-            [['fechainicio', 'fechafin'], 'safe'],
-            [['nombre'], 'string', 'max' => 30],
-            [['nombre_equipo'], 'string', 'max' => 20],
-            [['idjuegos'], 'exist', 'skipOnError' => true, 'targetClass' => Juegos::class, 'targetAttribute' => ['idjuegos' => 'idjuegos']],
-        ];
-    }
+{
+    return [
+        [['nombre', 'fechainicio', 'fechafin', 'nombre_equipo', 'idjuegos'], 'required'],
+        [['fechainicio', 'fechafin'], 'date', 'format' => 'php:Y-m-d' , 'message' => 'El formato en el cual debes escribir la fecha es YYYY-MM-dd'],
+        [['fechainicio'], 'compare', 'compareAttribute' => 'fechafin', 'operator' => '<=', 'message' => 'La fecha de inicio debe ser menor o igual a la fecha de fin.'],
+        [['idjuegos'], 'exist', 'targetClass' => Juegos::class, 'targetAttribute' => 'idjuegos', 'message' => 'El juego no existe.'],
+        [['nombre', 'nombre_equipo'], 'string', 'max' => 30],
+    ];
+}
 
     /**
      * {@inheritdoc}

@@ -30,10 +30,10 @@ class Modulos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idjuegos'], 'integer'],
+            [['nombre', 'idjuegos'], 'required', 'message' => 'Este campo no puede estar vacío.'],
+            [['idjuegos'], 'exist', 'targetClass' => Juegos::class, 'targetAttribute' => 'idjuegos', 'message' => 'El juego asociado no existe.'],
             [['nombre'], 'string', 'max' => 50],
             [['edicion'], 'string', 'max' => 10],
-            [['idjuegos'], 'exist', 'skipOnError' => true, 'targetClass' => Juegos::class, 'targetAttribute' => ['idjuegos' => 'idjuegos']],
         ];
     }
 

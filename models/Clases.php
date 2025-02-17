@@ -29,10 +29,8 @@ class Clases extends \yii\db\ActiveRecord
     {
         return [
             [['idpersonajes', 'clases'], 'required'],
-            [['idpersonajes'], 'integer'],
+            [['idpersonajes'], 'exist', 'targetClass' => Personajes::class, 'targetAttribute' => 'idpersonajes'],
             [['clases'], 'string', 'max' => 20],
-            [['idpersonajes', 'clases'], 'unique', 'targetAttribute' => ['idpersonajes', 'clases']],
-            [['idpersonajes'], 'exist', 'skipOnError' => true, 'targetClass' => Personajes::class, 'targetAttribute' => ['idpersonajes' => 'idpersonajes']],
         ];
     }
 
