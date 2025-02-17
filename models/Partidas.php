@@ -15,6 +15,8 @@ use Yii;
  * @property string|null $nombre_equipo
  *
  * @property Juegos $idjuegos0
+ * @property Jugadores[] $idjugadores
+ * @property Juegan[] $juegans
  */
 class Partidas extends \yii\db\ActiveRecord
 {
@@ -63,5 +65,25 @@ class Partidas extends \yii\db\ActiveRecord
     public function getIdjuegos0()
     {
         return $this->hasOne(Juegos::class, ['idjuegos' => 'idjuegos']);
+    }
+
+    /**
+     * Gets query for [[Idjugadores]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdjugadores()
+    {
+        return $this->hasMany(Jugadores::class, ['idjugadores' => 'idjugadores'])->viaTable('juegan', ['idpartidas' => 'idpartidas']);
+    }
+
+    /**
+     * Gets query for [[Juegans]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getJuegans()
+    {
+        return $this->hasMany(Juegan::class, ['idpartidas' => 'idpartidas']);
     }
 }
