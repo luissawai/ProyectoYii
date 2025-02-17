@@ -82,3 +82,94 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+/* Contenedor principal para las tarjetas */
+.card-container {
+    display: flex;          /* Activa Flexbox */
+    flex-wrap: wrap;        /* Permite que las tarjetas se envuelvan en varias líneas */
+    gap: 20px;              /* Espacio entre las tarjetas */
+    justify-content: space-between; /* Distribuye el espacio entre las tarjetas */
+}
+
+/* Estilo para cada tarjeta */
+.card {
+    flex: 1 1 calc(50% - 20px); /* Cada tarjeta ocupa el 50% del contenedor menos el espacio del gap */
+    background-color: #ffffff; /* Color de fondo */
+    border: 1px solid #ddd;   /* Borde */
+    border-radius: 8px;        /* Bordes redondeados */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra */
+    box-sizing: border-box;    /* Incluye el padding y el borde en el ancho */
+}
+
+/* Estilo para el cuerpo de la tarjeta */
+.card-body {
+    padding: 20px;             /* Espaciado interno */
+}
+
+/* Estilo para el título de la tarjeta */
+.card-title {
+    font-size: 1.25rem;        /* Tamaño del título */
+    margin-bottom: 10px;       /* Espacio debajo del título */
+}
+
+/* Estilo para el texto de la tarjeta */
+.card-text {
+    font-size: 1rem;           /* Tamaño del texto */
+    margin-bottom: 15px;       /* Espacio debajo del texto */
+}
+
+/* Estilo para el botón */
+.btn-primary {
+    background-color: #007bff; /* Color de fondo del botón */
+    border: none;              /* Sin borde */
+    padding: 10px 15px;        /* Espaciado interno */
+    border-radius: 5px;        /* Bordes redondeados */
+    color: white;              /* Color del texto */
+    text-decoration: none;     /* Sin subrayado */
+    display: inline-block;     /* Para que el botón se comporte como un bloque */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Color de fondo al pasar el mouse */
+}
+
+/* Estilos para el jumbotron */
+.jumbotron {
+    background-color: #f8f9fa; /* Color de fondo claro */
+    padding: 4rem 2rem;        /* Espaciado interno */
+    border-radius: 10px;       /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin: 2rem auto;         /* Centrar horizontalmente y agregar margen */
+    max-width: 800px;          /* Ancho máximo para que no se vea demasiado ancho */
+    text-align: center;        /* Centrar el texto */
+}
+
+/* Estilos para el título */
+.display-4 {
+    font-size: 2.5rem;         /* Tamaño del título */
+    font-weight: bold;         /* Negrita */
+    color: #343a40;            /* Color oscuro */
+    margin-bottom: 1.5rem;     /* Espacio debajo del título */
+}
+
+/* Estilos para el párrafo */
+.lead {
+    font-size: 1.25rem;        /* Tamaño del texto */
+    color: #6c757d;            /* Color gris */
+    margin-bottom: 2rem;       /* Espacio debajo del párrafo */
+    line-height: 1.6;          /* Altura de línea para mejor legibilidad */
+}
+
+/* Estilos para el botón */
+.btn-success {
+    background-color: #28a745; /* Color de fondo verde */
+    border: none;              /* Sin borde */
+    padding: 0.75rem 1.5rem;   /* Espaciado interno */
+    font-size: 1.1rem;         /* Tamaño del texto */
+    border-radius: 5px;        /* Bordes redondeados */
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+.btn-success:hover {
+    background-color: #218838; /* Color de fondo al pasar el mouse */
+}
