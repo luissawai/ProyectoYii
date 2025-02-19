@@ -16,15 +16,15 @@ use app\models\Jugadores;
 
     <?= $form->field($model, 'idjugadores')->dropDownList(
             ArrayHelper::map(Jugadores::find()->all(), 'idjugadores', 'nombre'),
-            ['prompt' => 'Selecciona un Jugador'] // 'prompt' es la opción correcta
+            ['prompt' => 'Selecciona un Jugador'] // Corregido para seleccionar un jugador
         ) ?>
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'master')->dropDownList(
-            [0 => 'No', 1 => 'Sí'], // Opciones para campo booleano
-            ['prompt' => 'Selecciona si es master']
-        ) ?>
+    <?= $form->field($model, 'master')->radioList([
+        1 => 'Sí',
+        0 => 'No',
+    ]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
@@ -33,3 +33,4 @@ use app\models\Jugadores;
     <?php ActiveForm::end(); ?>
 
 </div>
+
