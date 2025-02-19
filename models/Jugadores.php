@@ -28,15 +28,23 @@ class Jugadores extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-public function rules()
-{
-    return [
-        [['nombre', 'rol'], 'required'],
-        [['nombre'], 'unique', 'message' => 'Este nombre ya está registrado.'],
-        [['rol'], 'in', 'range' => ['jugador', 'master', 'NPC'], 'message' => 'El rol debe ser "jugador", "master" o "NPC".'],
-        [['nombre'], 'string', 'max' => 30],
-    ];
-}
+    public function rules()
+    {
+        return [
+            [['nombre', 'rol'], 'required'],
+            [['nombre'], 'unique', 'message' => 'Este nombre ya está registrado.'],
+            [['rol'], 'in', 'range' => ['jugador', 'master', 'NPC'], 'message' => 'El rol debe ser "jugador", "master" o "NPC".'],
+            [['nombre'], 'string', 'max' => 30],
+            [['seleccionables'], 'validateSeleccionables'],
+        ];
+    }
+
+    public function validateSeleccionables($attribute, $params)
+    {
+        if (count($this->$attribute) > 3) {
+            $this->addError($attribute, 'Solo puedes seleccionar hasta tres valores.');
+        }
+    }
 
     /**
      * {@inheritdoc}

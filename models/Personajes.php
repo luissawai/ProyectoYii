@@ -13,7 +13,7 @@ use Yii;
  * @property int|null $master
  *
  * @property Clases[] $clases
- * @property Jugadores $idjugadores0
+ * @property Jugadores $jugador // Relación con la tabla Jugadores
  */
 class Personajes extends \yii\db\ActiveRecord
 {
@@ -45,9 +45,9 @@ class Personajes extends \yii\db\ActiveRecord
     {
         return [
             'idpersonajes' => 'Idpersonajes',
-            'idjugadores' => 'Idjugadores',
-            'nombre' => 'Nombre',
-            'master' => 'Master',
+            'idjugadores' => 'Jugador',
+            'nombre' => 'Nombre del Personaje',
+            'master' => 'Es Master',
         ];
     }
 
@@ -62,11 +62,11 @@ class Personajes extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Idjugadores0]].
+     * Gets query for [[Jugador]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdjugadores0()
+    public function getJugador()
     {
         return $this->hasOne(Jugadores::class, ['idjugadores' => 'idjugadores']);
     }

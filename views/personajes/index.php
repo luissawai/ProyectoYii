@@ -20,12 +20,17 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Personajes', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             'idpersonajes',
-            'idjugadores',
+            [
+                'attribute' => 'jugadorNombre',
+                'label' => 'Nombre del Jugador',
+                'value' => function($model) {
+                    return $model->jugador->nombre;
+                },
+            ],
             'nombre',
             'master',
             [
@@ -36,6 +41,4 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-
-
 </div>
