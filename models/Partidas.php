@@ -86,4 +86,8 @@ class Partidas extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Juegan::class, ['idpartidas' => 'idpartidas']);
     }
+    public function getJuego()
+    {
+    return $this->hasOne(Juegos::class, ['idjuegos' => 'idjuegos']);
+    }
 }

@@ -23,22 +23,28 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            'idpersonajes',
+            
             [
                 'attribute' => 'jugadorNombre',
                 'label' => 'Nombre del Jugador',
-                'value' => function($model) {
-                    return $model->jugador->nombre;
+                'value' => function ($model) {
+                    return $model->jugador ? $model->jugador->nombre : '(Sin jugador)';
                 },
             ],
             'nombre',
-            'master',
+            [
+                'attribute' => 'master',
+                'value' => function ($model) {
+                    return $model->masterText; // Usa la función del modelo
+                },
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Personajes $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'idpersonajes' => $model->idpersonajes]);
-                 }
+                }
             ],
         ],
     ]); ?>
 </div>
+

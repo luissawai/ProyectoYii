@@ -15,11 +15,11 @@ use app\models\Jugadores;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'idjugadores')->dropDownList(
-            ArrayHelper::map(Jugadores::find()->all(), 'idjugadores', 'nombre'),
-            ['prompt' => 'Selecciona un Jugador'] // Corregido para seleccionar un jugador
-        ) ?>
+        ArrayHelper::map(Jugadores::find()->all(), 'idjugadores', 'nombre'),
+        ['prompt' => 'Selecciona un Jugador'] // Corregido para seleccionar un jugador
+    ) ?>
 
-    <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'nombre')->textInput(['maxlength' => true, 'placeholder' => 'Ejemplo: Félix portador de opiaceos']) ?>
 
     <?= $form->field($model, 'master')->radioList([
         1 => 'Sí',
@@ -33,4 +33,8 @@ use app\models\Jugadores;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+
+
+
 

@@ -12,11 +12,11 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'nombre')->textInput(['maxlength' => true, 'placeholder' => 'Ej: Dungeons & Dragons']) ?>
 
-    <?= $form->field($model, 'tematica')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'tematica')->textInput(['maxlength' => true, 'placeholder' => 'Ej: Ciencia ficción']) ?>
 
-    <?= $form->field($model, 'edicion')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'edicion')->textInput(['maxlength' => true, 'placeholder' => 'Ej: 5e']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

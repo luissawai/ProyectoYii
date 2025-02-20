@@ -20,24 +20,29 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Partidas', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            'idpartidas',
-            'idjuegos',
+            // Aquí mostramos el nombre del juego en lugar del idjuegos
+            [
+                'attribute' => 'idjuegos', 
+                'label' => 'Nombre del Juego', // Nombre para la columna
+                'value' => function($model) {
+                    return $model->juego->nombre; // Usamos la relación para obtener el nombre del juego
+                },
+            ],
             'nombre',
             'fechainicio',
             'fechafin',
-            //'nombre_equipo',
+            'nombre_equipo',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, partidas $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'idpartidas' => $model->idpartidas]);
-                 }
+                }
             ],
         ],
     ]); ?>
 
-
 </div>
+

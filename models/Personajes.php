@@ -45,9 +45,9 @@ class Personajes extends \yii\db\ActiveRecord
     {
         return [
             'idpersonajes' => 'Idpersonajes',
-            'idjugadores' => 'Jugador',
-            'nombre' => 'Nombre del Personaje',
-            'master' => 'Es Master',
+            'idjugadores' => 'Id del jugador',
+            'nombre' => 'Nombre del personaje',
+            'master' => 'Manejado por el master',
         ];
     }
 
@@ -70,4 +70,9 @@ class Personajes extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Jugadores::class, ['idjugadores' => 'idjugadores']);
     }
+    public function getMasterText()
+{
+    return $this->master ? 'Sí' : 'No';
+}
+
 }

@@ -24,7 +24,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            'idjuegos',
             'nombre',
             'tematica',
             'edicion',

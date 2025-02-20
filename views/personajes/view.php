@@ -26,14 +26,19 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'idpersonajes',
-            'idjugadores',
-            'nombre',
-            'master',
+<?= DetailView::widget([
+    'model' => $model,
+    'attributes' => [
+        'idpersonajes',
+        'idjugadores',
+        'nombre',
+        [
+            'attribute' => 'master',
+            'value' => $model->masterText, // Usa la función del modelo
         ],
-    ]) ?>
+    ],
+]) ?>
+
 
 </div>
+
