@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Personajes', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear Personaje', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -33,7 +33,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'nombre',
             [
+                'attribute' => 'clases',
+                'label' => 'Clases',
+                'value' => function ($model) {
+                    return $model->clasesTexto; // Llama a la nueva función del modelo
+                },
+            ],
+            [
                 'attribute' => 'master',
+                'label' => '¿Es master?',
                 'value' => function ($model) {
                     return $model->masterText; // Usa la función del modelo
                 },
@@ -47,4 +55,3 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 </div>
-

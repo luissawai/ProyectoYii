@@ -55,3 +55,4 @@ class Clases extends \yii\db\ActiveRecord
         return $this->hasOne(Personajes::class, ['idpersonajes' => 'idpersonajes']);
     }
 }
+

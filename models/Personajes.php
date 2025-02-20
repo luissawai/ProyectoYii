@@ -13,7 +13,7 @@ use Yii;
  * @property int|null $master
  *
  * @property Clases[] $clases
- * @property Jugadores $jugador // Relación con la tabla Jugadores
+ * @property Jugadores $jugador
  */
 class Personajes extends \yii\db\ActiveRecord
 {
@@ -44,16 +44,15 @@ class Personajes extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idpersonajes' => 'Idpersonajes',
-            'idjugadores' => 'Id del jugador',
+            'idpersonajes' => 'ID',
+            'idjugadores' => 'Jugador',
             'nombre' => 'Nombre del personaje',
-            'master' => 'Manejado por el master',
+            'master' => '¿Es master?',
         ];
     }
 
     /**
-     * Gets query for [[Clases]].
-     *
+     * Relación con Clases (Un personaje puede tener varias clases)
      * @return \yii\db\ActiveQuery
      */
     public function getClases()
@@ -62,17 +61,33 @@ class Personajes extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Jugador]].
-     *
+     * Relación con Jugadores (Un personaje pertenece a un jugador)
      * @return \yii\db\ActiveQuery
      */
     public function getJugador()
     {
         return $this->hasOne(Jugadores::class, ['idjugadores' => 'idjugadores']);
     }
-    public function getMasterText()
-{
-    return $this->master ? 'Sí' : 'No';
-}
 
+    /**
+     * Devuelve el texto para el campo master
+     * @return string
+     */
+    public function getMasterText()
+    {
+        return $this->master ? 'Sí' : 'No';
+    }
+
+    /**
+     * Devuelve una lista de clases en formato de texto
+     * @return string
+     */
+    public function getClasesTexto()
+    {
+        $clasesArray = array_map(function ($clase) {
+            return $clase->clases; // Asegurar que 'clases' es el atributo correcto en la tabla
+        }, $this->clases);
+
+        return empty($clasesArray) ? '(Sin clases)' : implode(', ', $clasesArray);
+    }
 }
