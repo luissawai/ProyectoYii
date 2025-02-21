@@ -55,8 +55,11 @@ class Modulos extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdjuegos0()
+   public function getJuego()
     {
         return $this->hasOne(Juegos::class, ['idjuegos' => 'idjuegos']);
     }
+
+
+
 }

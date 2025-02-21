@@ -1,6 +1,6 @@
 <?php
 
-use app\models\modulos;
+use app\models\Modulos;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -20,22 +20,26 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Modulos', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             'idmodulos',
-            'idjuegos',
+            [
+                'attribute' => 'idjuegos',
+                'value' => function ($model) {
+                    return $model->juego ? $model->juego->nombre : '(Sin juego)';
+                },
+                'label' => 'Nombre del juego',
+            ],
             'nombre',
             'edicion',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, modulos $model, $key, $index, $column) {
+                'urlCreator' => function ($action, Modulos $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'idmodulos' => $model->idmodulos]);
-                 }
+                }
             ],
         ],
     ]); ?>
-
 
 </div>

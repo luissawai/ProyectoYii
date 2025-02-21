@@ -2,9 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\Juegos;
 
 /** @var yii\web\View $this */
-/** @var app\models\modulos $model */
+/** @var app\models\Modulos $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
@@ -12,7 +14,10 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'idjuegos')->textInput() ?>
+    <?= $form->field($model, 'idjuegos')->dropDownList(
+        ArrayHelper::map(Juegos::find()->all(), 'idjuegos', 'nombre'),
+        ['prompt' => 'Seleccione un juego']
+    ) ?>
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
 

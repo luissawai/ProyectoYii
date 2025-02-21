@@ -10,7 +10,7 @@ use Yii;
  * @property int $idpersonajes
  * @property string $clases
  *
- * @property Personajes $idpersonajes0
+ * @property Personajes $personaje
  */
 class Clases extends \yii\db\ActiveRecord
 {
@@ -29,8 +29,9 @@ class Clases extends \yii\db\ActiveRecord
     {
         return [
             [['idpersonajes', 'clases'], 'required'],
-            [['idpersonajes'], 'exist', 'targetClass' => Personajes::class, 'targetAttribute' => 'idpersonajes'],
+            [['idpersonajes'], 'integer'],
             [['clases'], 'string', 'max' => 20],
+            [['idpersonajes'], 'exist', 'skipOnError' => true, 'targetClass' => Personajes::class, 'targetAttribute' => ['idpersonajes' => 'idpersonajes']],
         ];
     }
 
@@ -40,19 +41,19 @@ class Clases extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idpersonajes' => 'Idpersonajes',
+            'idpersonajes' => 'ID Personaje',
             'clases' => 'Clases',
+            'idnombre' => 'ID Nombre',
         ];
     }
 
     /**
-     * Gets query for [[Idpersonajes0]].
+     * Gets query for [[Personaje]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdpersonajes0()
+    public function getPersonaje()
     {
         return $this->hasOne(Personajes::class, ['idpersonajes' => 'idpersonajes']);
     }
 }
-

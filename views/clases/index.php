@@ -1,6 +1,6 @@
 <?php
 
-use app\models\clases;
+use app\models\Clases; // Asegurar que el modelo tiene el nombre correcto
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -20,20 +20,24 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Clases', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            'idpersonajes',
+            [
+                'attribute' => 'idnombre', 
+                'label' => 'Nombre del Personaje', 
+                'value' => function($model) {
+                    return $model->personaje->nombre ?? '(Sin Nombre)'; // Prevenir errores si la relación es nula
+                }
+            ],
             'clases',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, clases $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'idpersonajes' => $model->idpersonajes, 'clases' => $model->clases]);
-                 }
+                'urlCreator' => function ($action, Clases $model, $key, $index, $column) {
+                    return Url::toRoute([$action, 'id' => $model->idpersonajes]); // 'id' en lugar de 'idpersonajes' y 'clases'
+                }
             ],
         ],
     ]); ?>
-
 
 </div>
