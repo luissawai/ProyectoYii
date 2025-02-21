@@ -23,7 +23,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            'idmodulos',
             [
                 'attribute' => 'idjuegos',
                 'value' => function ($model) {

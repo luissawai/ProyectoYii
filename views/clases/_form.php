@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'idpersonajes')->textInput() ?>
 
-    <?= $form->field($model, 'clases')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'clases')->textInput(['maxlength' => true, 'placeholder' => 'Ejemplo: Bárbaro, Mago, Asesino, etc.']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

@@ -44,9 +44,9 @@ class Modulos extends \yii\db\ActiveRecord
     {
         return [
             'idmodulos' => 'Idmodulos',
-            'idjuegos' => 'Idjuegos',
+            'idjuegos' => 'Nombre del juego',
             'nombre' => 'Nombre',
-            'edicion' => 'Edicion',
+            'edicion' => 'Edición',
         ];
     }
 
