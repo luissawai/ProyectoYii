@@ -30,10 +30,7 @@ $config = [
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'useFileTransport' => true, // Cambia a false si quieres enviar emails reales
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -45,32 +42,31 @@ $config = [
             ],
         ],
         'db' => $db,
-        
+
+        // ✅ CORRECCIÓN: mover `rules` dentro de `urlManager`
         'urlManager' => [
             'enablePrettyUrl' => true,
-            'showScriptName' => true,
+            'showScriptName' => false, // ✅ Si quieres URLs sin index.php
             'rules' => [
+                'register' => 'site/register', // ✅ Ahora está en el lugar correcto
+                'login' => 'site/login',
+                'logout' => 'site/logout',
             ],
         ],
-        
     ],
     'params' => $params,
 ];
 
 if (YII_ENV_DEV) {
-    // configuration adjustments for 'dev' environment
+    // Configuración para entorno de desarrollo
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
-        // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
-        // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 }
 
