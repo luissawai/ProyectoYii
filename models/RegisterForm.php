@@ -23,20 +23,26 @@ class RegisterForm extends Model
 
     public function register()
     {
-        if ($this->validate()) {
-            $user = new User();
-            $user->username = $this->username;
-            $user->email = $this->email;
-            $user->setPassword($this->password); // Asegura que la contraseña se encripte correctamente
-            $user->auth_key = Yii::$app->security->generateRandomString();
-            Yii::debug('Registrando nuevo usuario: ' . print_r($user, true), __METHOD__);
-            
-            if (!$user->save()) {
-                Yii::error('Error al guardar usuario: ' . print_r($user->errors, true), __METHOD__);
-                return false;
-            }
-            return true;
+        if (!$this->validate()) {
+            return false;
         }
+
+        $user = new User();
+        $user->username = $this->username;
+        $user->email = $this->email;
+        $user->setPassword($this->password);
+        $user->generateAuthKey();
+
+        if ($user->save()) {
+            // Opcional: asignar rol básico
+            $auth = Yii::$app->authManager;
+            $role = $auth->getRole('usuario');
+            $auth->assign($role, $user->id);
+
+            return Yii::$app->user->login($user, 3600 * 24 * 30); // Auto-login después de registro
+        }
+
+        Yii::error('Error al registrar usuario: ' . print_r($user->errors, true));
         return false;
     }
 }
