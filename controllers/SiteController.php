@@ -70,13 +70,12 @@ class SiteController extends Controller
      *
      * @return Response|string
      */
+    // filepath: c:\xampp\htdocs\dam\yii2\ProyectoAC\controllers\SiteController.php
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
+        $this->layout = 'main'; // Asegúrate de que el diseño principal se aplique
         $model = new LoginForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }

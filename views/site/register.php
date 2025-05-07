@@ -3,21 +3,20 @@ use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 
 $this->title = 'Registro';
-// $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="d-flex justify-content-center align-items-center min-vh-100">
-    <div class="card shadow-lg p-4 bg-white rounded register-card" style="width: 100%; max-width: 450px;">
+<div class="register-container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow-lg p-4 rounded register-card" style="width: 100%; max-width: 450px;">
         <div class="card-body p-3">
-            <h3 class="text-center mb-4"><?= Html::encode($this->title) ?></h3>
+            <h3 class="text-center mb-4 text-white"><?= Html::encode($this->title) ?></h3>
             <p class="text-center text-muted mb-4">Por favor complete los siguientes campos para registrarse:</p>
 
             <?php $form = ActiveForm::begin([
                 'id' => 'register-form',
                 'fieldConfig' => [
                     'template' => "<div class='form-group mb-4'>{label}{input}{error}</div>",
-                    'labelOptions' => ['class' => 'form-label mb-2'],
-                    'inputOptions' => ['class' => 'form-control'],
+                    'labelOptions' => ['class' => 'form-label mb-2 text-white'],
+                    'inputOptions' => ['class' => 'form-control input-field'],
                     'errorOptions' => ['class' => 'invalid-feedback'],
                 ],
             ]); ?>
@@ -53,37 +52,33 @@ $this->title = 'Registro';
             <?php ActiveForm::end(); ?>
 
             <div class="text-center mt-4 pt-3">
-                <p class="mb-0">¿Ya tienes una cuenta? <?= Html::a('Inicia sesión aquí', ['site/login'], ['class' => 'login-link']) ?></p>
+                <p class="mb-0 text-white">¿Ya tienes una cuenta? <?= Html::a('Inicia sesión aquí', ['site/login'], ['class' => 'login-link']) ?></p>
             </div>
         </div>
     </div>
 </div>
 
 <style>
-/* Estilos generales */
-body {
-    background-color: #EADDC4;
-    font-family: 'Poppins', sans-serif;
-    color: #3B2B2B;
+/* Contenedor del registro */
+.register-container {
+    padding: 40px;
+    min-height: 100vh;
 }
 
 /* Tarjeta de registro */
 .register-card {
-    border: 2px solid #8B3A3A;
-    background-color: #F5F0E6;
-}
-
-/* Contenedor de campos */
-.form-field {
-    width: 100%;
-    margin-bottom: 1.5rem;
+    border: 2px solid #5a189a; /* Borde morado oscuro */
+    background-color:rgb(31, 21, 34); /* Fondo oscuro */
+    color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 /* Campos de formulario */
 .input-field {
-    background-color: #fff;
-    border: 1px solid #C1A15A;
-    color: #3B2B2B;
+    background-color: #1e1e2f; /* Fondo oscuro para los inputs */
+    border: 1px solid #5a189a; /* Borde morado oscuro */
+    color: white;
     padding: 12px 15px;
     border-radius: 8px;
     height: 50px;
@@ -91,17 +86,12 @@ body {
     transition: all 0.3s;
 }
 
-.main > .container{
-    padding: 25px !important;
-}
-
 .input-field::placeholder {
-    color: #888;
-    opacity: 1;
+    color: #aaa; /* Color del texto placeholder */
 }
 
 .input-field:focus {
-    border-color: #8B3A3A;
+    border-color: #8b3a3a; /* Borde rojo oscuro al enfocar */
     box-shadow: 0 0 0 3px rgba(139, 58, 58, 0.2);
     outline: none;
 }
@@ -109,7 +99,7 @@ body {
 /* Etiquetas */
 .form-label {
     display: block;
-    color: #3B2B2B;
+    color: white;
     font-weight: 500;
     margin-bottom: 8px;
     text-align: left;
@@ -118,7 +108,7 @@ body {
 
 /* Botón de registro */
 .btn-register {
-    background-color: #8B3A3A;
+    background-color: #5a189a; /* Morado oscuro */
     color: white;
     border: none;
     font-weight: 600;
@@ -128,25 +118,25 @@ body {
 }
 
 .btn-register:hover {
-    background-color: #752f2f;
+    background-color: #3c096c; /* Morado más oscuro */
     color: white;
 }
 
 /* Enlace de login */
 .login-link {
-    color: #8B3A3A;
+    color: #C1A15A; /* Dorado */
     font-weight: 500;
     text-decoration: none;
 }
 
 .login-link:hover {
     text-decoration: underline;
-    color: #752f2f;
+    color: #8b3a3a; /* Rojo oscuro */
 }
 
 /* Mensajes de error */
 .invalid-feedback {
-    color: #8B3A3A;
+    color: #8b3a3a; /* Rojo oscuro */
     font-size: 0.875em;
     margin-top: 5px;
     text-align: left;

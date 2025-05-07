@@ -2,46 +2,171 @@
 
 /** @var yii\web\View $this */
 
-$this->title = 'My Yii Application';
+$this->title = 'Gestión de Juegos de Rol';
 ?>
 <div class="site-index">
 
-    <div class="jumbotron text-center bg-transparent">
-        <h1 class="display-4">Bienvenido a la aplicación de gestión de juegos de rol</h1>
-        <p class="lead">
-            Explora un mundo de posibilidades donde podrás organizar y gestionar tus partidas de manera sencilla y eficiente. Con herramientas diseñadas para jugadores y directores de juego, nuestra plataforma te permite crear personajes, planificar aventuras y mantener un registro detallado de tus campañas. Sumérgete en la experiencia y lleva tu juego de rol al siguiente nivel.
-        </p>
-        <p>
-            <a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Explorar</a>
-        </p>
+    <!-- Primera sección: Imagen con texto superpuesto -->
+    <div class="hero-section text-center text-white">
+        <div class="hero-overlay">
+            <h1 class="display-4">¡Lleva tus juegos de rol al siguiente nivel!</h1>
+            <p class="lead">Organiza, gestiona y disfruta de tus partidas con nuestra plataforma.</p>
+            <a href="<?= Yii::$app->urlManager->createUrl(['site/register']); ?>" class="btn btn-purple-start btn-lg">Comenzar ahora</a>
+        </div>
     </div>
-    
-    <div class="card-container">
-        <!-- Tarjeta 1 -->
-        <div class="card">
-            <div class="card-body">
-                <div class="content-container">
-                    <div class="text-container">
-                        <h5 class="card-title">Ver estadísticas de jugadores</h5>
-                        <p class="card-text">Consulta las estadísticas de cada jugador</p>
-                        <a href="<?= Yii::$app->urlManager->createUrl(['site/mejor-ciclista-por-equipo']); ?>" class="btn btn-primary">Ir</a>
+
+    <!-- Segunda sección: Tarjetas -->
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Explora nuestras funcionalidades</h2>
+        <div class="row">
+            <!-- Tarjeta 1 -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Estadísticas de jugadores</h5>
+                        <p class="card-text">Consulta y analiza el rendimiento de cada jugador en tus partidas.</p>
+                        <a href="<?= Yii::$app->urlManager->createUrl(['site/estadisticas']); ?>" class="btn btn-primary">Ver más</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Tarjeta 2 -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Calendario de partidas</h5>
+                        <p class="card-text">Organiza y consulta las fechas de tus próximas aventuras.</p>
+                        <a href="<?= Yii::$app->urlManager->createUrl(['site/calendario']); ?>" class="btn btn-primary">Ver más</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Tarjeta 3 -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Gestión de personajes</h5>
+                        <p class="card-text">Crea y administra personajes para tus campañas de rol.</p>
+                        <a href="<?= Yii::$app->urlManager->createUrl(['site/personajes']); ?>" class="btn btn-primary">Ver más</a>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Tarjeta 2 -->
-        <div class="card">
-            <div class="card-body">
-                <div class="content-container">
-                    <div class="text-container">
-                        <h5 class="card-title">Ver Calendario</h5>
-                        <p class="card-text">Consulta las fechas de cada partida</p>
-                        <a href="<?= Yii::$app->urlManager->createUrl(['site/mejor-ciclista-por-equipo']); ?>" class="btn btn-primary">Ir</a>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
+    <!-- Tercera sección: Tabla de datos -->
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Últimos registros</h2>
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Jugador</th>
+                    <th scope="col">Partida</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Puntuación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Juan Pérez</td>
+                    <td>Aventura en el bosque</td>
+                    <td>2025-05-07</td>
+                    <td>95</td>
+                </tr>
+                <tr>
+                    <td>María López</td>
+                    <td>El castillo perdido</td>
+                    <td>2025-05-06</td>
+                    <td>88</td>
+                </tr>
+                <tr>
+                    <td>Carlos García</td>
+                    <td>La cueva del dragón</td>
+                    <td>2025-05-05</td>
+                    <td>92</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<style>
+    /* Primera sección: Hero */
+    .hero-section {
+        background-image: url('<?= Yii::getAlias("@web/images/fondo-juego-mesa.jpg") ?>'); /* Genera la URL completa */
+        background-size: cover; /* Asegura que la imagen cubra toda la sección */
+        background-position: center; /* Centra la imagen */
+        height: 450px;
+        width: 100% !important;/* Ocupa el 100% de la altura de la ventana */   
+     }
     
+    .hero-overlay {
+        background-color: rgba(0, 0, 0, 0.6); /* Oscurece la imagen de fondo */
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        height: 450px;
+        max-width: 100%; /* Limita el ancho del contenido */
+    }
+
+    .hero-section h1 {
+        padding-top: 50px;
+        font-size: 3rem; /* Tamaño grande para el título */
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: white !important;
+    }
+
+    .hero-section p {
+        padding-top: 20px;
+        font-size: 1.5rem; /* Tamaño más grande para el texto descriptivo */
+        margin-bottom: 30px;
+        color: white !important;
+    }
+
+    .btn-purple {
+        background-color: #5a189a; /* Morado oscuro */
+        color: white;
+        border-radius: 50px;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+    }
+
+    .btn-purple-start{
+        background-color: #5a189a; /* Morado oscuro */
+        color: white;
+        border-radius: 50px;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+    }
+
+    .btn-purple:hover {
+        background-color: #3c096c; /* Morado más oscuro al pasar el mouse */
+        color: white;
+    }
+
+    /* Tarjetas */
+    .card {
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card-title {
+        color: var(--secondary-color);
+        font-weight: bold;
+    }
+
+    /* Tabla */
+    .table {
+        margin-top: 20px;
+    }
+
+    .table th,
+    .table td {
+        text-align: center;
+    }
+</style>

@@ -2,15 +2,34 @@ main > .container {
     padding: 70px 15px 20px;
 }
 
-.footer {
-    background-color: #f5f5f5;
-    font-size: .9em;
-    height: 60px;
+/* Login Container */
+.login-container {
+    background-color: #F5F0E6;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 420px;
+    margin: 40px auto;
+    border: 2px solid #8B3A3A;
 }
 
-.footer > .container {
-    padding-right: 15px;
-    padding-left: 15px;
+/* Botón de inicio de sesión */
+.login-button {
+    background-color: #5a189a;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    color: #fff;
+    width: 100%;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #3c096c;
 }
 
 .not-set {
@@ -120,7 +139,7 @@ a.desc:after {
 
 /* Estilo para el botón */
 .btn-primary {
-    background-color: #007bff; /* Color de fondo del botón */
+    background-color: #17152d; /* Color de fondo del botón */
     border: none;              /* Sin borde */
     padding: 10px 15px;        /* Espaciado interno */
     border-radius: 5px;        /* Bordes redondeados */
