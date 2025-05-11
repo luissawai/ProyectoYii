@@ -42,8 +42,8 @@ AppAsset::register($this);
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav ml-auto align-items-center'],
             'items' => [
-                ['label' => 'Proyectos', 'url' => ['/site/projects'], 'linkOptions' => ['class' => 'nav-link']],
-                ['label' => 'Servicios', 'url' => ['/site/services'], 'linkOptions' => ['class' => 'nav-link']],
+                ['label' => 'Jugadores', 'url' => ['/jugadores/index'], 'linkOptions' => ['class' => 'nav-link']],
+                ['label' => 'Partidas', 'url' => ['/partidas/index'], 'linkOptions' => ['class' => 'nav-link']],
                 ['label' => 'Sobre Nosotros', 'url' => ['/site/about'], 'linkOptions' => ['class' => 'nav-link']],
                 ['label' => 'Contacto', 'url' => ['/site/contacto'], 'linkOptions' => ['class' => 'nav-link']],
                 Yii::$app->user->isGuest ? (
@@ -64,6 +64,19 @@ AppAsset::register($this);
                 ),
             ],
         ]);
+
+        // ----------------------------------------
+        // 🚀 Inicio de la barra de búsqueda
+        echo Html::beginForm(['/site/search'], 'get', ['class' => 'form-inline ml-auto']);
+        echo Html::input('text', 'q', Yii::$app->request->get('q'), [
+            'class' => 'form-control mr-sm-2',
+            'placeholder' => 'Buscar...',
+            'aria-label' => 'Buscar'
+        ]);
+        echo Html::submitButton('Buscar', ['class' => 'btn btn-purple my-2 my-sm-0']);
+        echo Html::endForm();
+        // 🚀 Fin de la barra de búsqueda
+        // -----
 
         NavBar::end();
         ?>
@@ -126,12 +139,15 @@ AppAsset::register($this);
 
 <style>
     /* Paleta de colores */
-    html, body {
+    html,
+    body {
         margin: 0;
         padding: 0;
-        height: 100%; /* Asegura que ocupen toda la altura de la ventana */
+        height: 100%;
+        /* Asegura que ocupen toda la altura de la ventana */
         display: flex;
-        flex-direction: column; /* Configura el diseño en columnas */
+        flex-direction: column;
+        /* Configura el diseño en columnas */
     }
 
     .container-main {
@@ -140,16 +156,20 @@ AppAsset::register($this);
     }
 
     main {
-        flex: 1; /* Hace que el contenido principal ocupe el espacio restante */
+        flex: 1;
+        /* Hace que el contenido principal ocupe el espacio restante */
     }
 
     .footer {
-        background-color: #080f19; /* Fondo oscuro */
+        background-color: #080f19;
+        /* Fondo oscuro */
         color: white;
         font-size: 14px;
-        margin-bottom: 0; /* Elimina cualquier margen adicional */
+        margin-bottom: 0;
+        /* Elimina cualquier margen adicional */
         padding: 20px 0;
     }
+
     :root {
         --primary-color: #080f19;
         /* Morado oscuro */
@@ -163,7 +183,8 @@ AppAsset::register($this);
 
     /* Header */
     #main-header {
-        background-color:rgb(31, 21, 34); /* Fondo oscuro */
+        background-color: rgb(31, 21, 34);
+        /* Fondo oscuro */
         padding: 10px 20px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
@@ -181,23 +202,18 @@ AppAsset::register($this);
     }
 
     .btn-purple {
-        background-color: #17152d;
+        background-color: #5a189a;
         /* Morado oscuro */
         color: white;
         font-weight: bold;
-        border-radius: 50px;
+        border-radius: 5px;
         /* Bordes redondeados */
-        padding: 20px 40px;
-        /* Aumentar el tamaño del botón */
+        padding: 8px 16px;
+        /* Tamaño del botón */
         border: none;
         text-transform: uppercase;
-        font-size: 16px;
-        /* Mantener el tamaño de letra */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: auto;
-        /* Ajustar el ancho automáticamente */
+        font-size: 14px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
     }
 
     .btn-purple:hover {
@@ -205,6 +221,8 @@ AppAsset::register($this);
         /* Morado más oscuro al pasar el mouse */
         color: white;
         text-decoration: none;
+        transform: scale(1.05);
+        /* Efecto de agrandamiento */
     }
 
     /* Logo */
@@ -218,7 +236,8 @@ AppAsset::register($this);
     }
 
     .footer {
-        background-color:rgb(31, 21, 34); /* Fondo oscuro */
+        background-color: rgb(31, 21, 34);
+        /* Fondo oscuro */
         color: white;
         font-size: 14px;
     }
@@ -244,7 +263,8 @@ AppAsset::register($this);
     }
 
     .footer ul li a:hover {
-        color: var(--secondary-color); /* Dorado */
+        color: var(--secondary-color);
+        /* Dorado */
         text-decoration: underline;
     }
 
@@ -256,7 +276,7 @@ AppAsset::register($this);
     }
 
     .footer .text-center a:hover {
-        color: var(--secondary-color); /* Dorado */
+        color: var(--secondary-color);
+        /* Dorado */
     }
-
 </style>

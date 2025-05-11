@@ -11,6 +11,13 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\RegisterForm;
 
+use app\models\Personajes;
+use app\models\Partidas;
+use app\models\Jugadores;
+use app\models\Juegos;
+use app\models\Modulos;
+
+
 class SiteController extends Controller
 {
     /**
@@ -128,7 +135,7 @@ class SiteController extends Controller
     
     public function actionRegister()
 {
-    $model = new RegisterForm(); // Asegúrate de que este modelo existe
+    $model = new RegisterForm();
 
     if ($model->load(Yii::$app->request->post()) && $model->register()) {
         return $this->redirect(['site/login']);
@@ -139,4 +146,38 @@ class SiteController extends Controller
     ]);
 }
 
+/**
+     * 🔍 Búsqueda global
+     */
+    public function actionSearch($q = '')
+    {
+        $results = [];
+
+        if (!empty($q)) {
+            $results['jugadores'] = Jugadores::find()
+                ->where(['like', 'nombre', $q])
+                ->all();
+
+            $results['personajes'] = Personajes::find()
+                ->where(['like', 'nombre', $q])
+                ->all();
+
+            $results['juegos'] = Juegos::find()
+                ->where(['like', 'nombre', $q])
+                ->all();
+
+            $results['modulos'] = Modulos::find()
+                ->where(['like', 'nombre', $q])
+                ->all();
+
+            $results['partidas'] = Partidas::find()
+                ->where(['like', 'nombre', $q])
+                ->all();
+        }
+
+        return $this->render('search', [
+            'query' => $q,
+            'results' => $results,
+        ]);
+    }
 }

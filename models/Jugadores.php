@@ -10,6 +10,7 @@ use Yii;
  * @property int $idjugadores
  * @property string|null $nombre
  * @property string|null $rol
+ * @property array|null $seleccionables
  *
  * @property Partidas[] $idpartidas
  * @property Juegan[] $juegans
@@ -17,6 +18,11 @@ use Yii;
  */
 class Jugadores extends \yii\db\ActiveRecord
 {
+    /**
+     * Atributo virtual para opciones seleccionables.
+     */
+    public $seleccionables = ['jugador', 'master', 'NPC'];
+
     /**
      * {@inheritdoc}
      */
@@ -31,19 +37,11 @@ class Jugadores extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'rol'], 'required'],
-            [['nombre'], 'unique', 'message' => 'Este nombre ya está registrado.'],
-            [['rol'], 'in', 'range' => ['jugador', 'master', 'NPC'], 'message' => 'El rol debe ser "jugador", "master" o "NPC".'],
-            [['nombre'], 'string', 'max' => 30],
-            [['seleccionables'], 'validateSeleccionables'],
+            [['nombre', 'rol'], 'required'], // 'nombre' y 'rol' son obligatorios
+            [['nombre'], 'unique', 'message' => 'Este nombre ya está registrado.'], // 'nombre' debe ser único
+            [['rol'], 'in', 'range' => $this->seleccionables, 'message' => 'El rol debe ser "jugador", "master" o "NPC".'], // Validación de 'rol'
+            [['nombre'], 'string', 'max' => 30], // Longitud máxima de 'nombre'
         ];
-    }
-
-    public function validateSeleccionables($attribute, $params)
-    {
-        if (count($this->$attribute) > 3) {
-            $this->addError($attribute, 'Solo puedes seleccionar hasta tres valores.');
-        }
     }
 
     /**
@@ -52,7 +50,7 @@ class Jugadores extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idjugadores' => 'Idjugadores',
+            'idjugadores' => 'ID Jugadores',
             'nombre' => 'Nombre',
             'rol' => 'Rol',
         ];
