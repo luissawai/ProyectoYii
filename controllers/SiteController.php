@@ -17,6 +17,7 @@ use app\models\Partidas;
 use app\models\Jugadores;
 use app\models\Juegos;
 use app\models\Modulos;
+use app\models\User;
 
 class SiteController extends Controller
 {
@@ -116,10 +117,20 @@ class SiteController extends Controller
 
     public function actionRegister()
     {
-        $model = new RegisterForm();
+        $model = new \app\models\RegisterForm(); // o el modelo que estés usando
 
-        if ($model->load(Yii::$app->request->post()) && $model->register()) {
-            return $this->redirect(['site/login']);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $user = new User();
+            $user->username = $model->username;
+            $user->email = $model->email;
+            $user->setPassword($model->password); // Asume que tienes este método
+            $user->generateAuthKey();
+            $user->generateAccessToken();
+
+            if ($user->save()) {
+                Yii::$app->session->setFlash('success', 'Gracias por registrarte. Ahora puedes iniciar sesión.');
+                return $this->redirect(['site/login']);
+            }
         }
 
         return $this->render('register', [
