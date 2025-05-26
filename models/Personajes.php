@@ -85,9 +85,13 @@ class Personajes extends \yii\db\ActiveRecord
     public function getClasesTexto()
     {
         $clasesArray = array_map(function ($clase) {
-            return $clase->clases; // Asegurar que 'clases' es el atributo correcto en la tabla
+            return $clase->clases; // Asegúrate de que 'clases' es el atributo correcto en la tabla 'Clases'
         }, $this->clases);
 
         return empty($clasesArray) ? '(Sin clases)' : implode(', ', $clasesArray);
+    }
+    public static function getCount()
+    {
+    return self::find()->count();
     }
 }

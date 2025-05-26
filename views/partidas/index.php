@@ -138,12 +138,4 @@ $this->title = 'Partidas';
     <?php endforeach; ?>
     </div>
 
-</div>
-
-
-
-
-
-
-
-
+</div> 

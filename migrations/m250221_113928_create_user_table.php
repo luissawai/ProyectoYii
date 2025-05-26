@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `users`.
  */
-class m210130_123456_create_users_table extends Migration
+class m250221_113928_create_user_table extends Migration // Nombre de clase corregido
 {
     /**
      * {@inheritdoc}
@@ -30,6 +30,3 @@ class m210130_123456_create_users_table extends Migration
         $this->dropTable('users');
     }
 }
-
-
-

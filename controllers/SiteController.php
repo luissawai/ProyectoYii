@@ -7,6 +7,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
+
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\RegisterForm;
@@ -17,12 +18,8 @@ use app\models\Jugadores;
 use app\models\Juegos;
 use app\models\Modulos;
 
-
 class SiteController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
@@ -46,9 +43,6 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function actions()
     {
         return [
@@ -62,14 +56,19 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * Displays homepage.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
-        return $this->render('index');
+        // Obtener conteos desde la base de datos
+        $totalPersonajes = Personajes::find()->count();
+        $totalPartidas = Partidas::find()->count();
+        $totalJugadores = Jugadores::find()->count();
+
+        // Pasar los datos a la vista
+        return $this->render('index', [
+            'totalPersonajes' => $totalPersonajes,
+            'totalPartidas' => $totalPartidas,
+            'totalJugadores' => $totalJugadores,
+        ]);
     }
 
     /**
@@ -77,10 +76,9 @@ class SiteController extends Controller
      *
      * @return Response|string
      */
-    // filepath: c:\xampp\htdocs\dam\yii2\ProyectoAC\controllers\SiteController.php
     public function actionLogin()
     {
-        $this->layout = 'main'; // Asegúrate de que el diseño principal se aplique
+        $this->layout = 'main';
         $model = new LoginForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
@@ -93,29 +91,17 @@ class SiteController extends Controller
         ]);
     }
 
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
         return $this->goHome();
     }
 
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
     public function actionContact()
     {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
-
             return $this->refresh();
         }
         return $this->render('contact', [
@@ -123,30 +109,25 @@ class SiteController extends Controller
         ]);
     }
 
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
     public function actionAbout()
     {
         return $this->render('about');
     }
-    
-    public function actionRegister()
-{
-    $model = new RegisterForm();
 
-    if ($model->load(Yii::$app->request->post()) && $model->register()) {
-        return $this->redirect(['site/login']);
+    public function actionRegister()
+    {
+        $model = new RegisterForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->register()) {
+            return $this->redirect(['site/login']);
+        }
+
+        return $this->render('register', [
+            'model' => $model,
+        ]);
     }
 
-    return $this->render('register', [
-        'model' => $model,
-    ]);
-}
-
-/**
+    /**
      * 🔍 Búsqueda global
      */
     public function actionSearch($q = '')

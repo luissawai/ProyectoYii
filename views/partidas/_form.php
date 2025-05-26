@@ -4,10 +4,6 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Juegos;
 
-/** @var yii\web\View $this */
-/** @var app\models\Partidas $model */
-/** @var yii\widgets\ActiveForm $form */
-
 $juegos = ArrayHelper::map(Juegos::find()->all(), 'idjuegos', 'nombre');
 ?>
 
@@ -44,11 +40,23 @@ $juegos = ArrayHelper::map(Juegos::find()->all(), 'idjuegos', 'nombre');
         'class' => 'form-control'
     ]) ?>
 
-    <div class="form-group d-flex justify-content-between">
-        <?= Html::submitButton('💾 Guardar', ['class' => 'btn btn-success']) ?>
-        <?= Html::a('◁ Volver atrás', ['index'], ['class' => 'btn btn-secondary']) ?>
+    <div class="form-group" style="display: flex; justify-content: space-between; gap: 1rem; margin-top: 2rem;">
+        <?= Html::submitButton('💾 Guardar', ['class' => 'btn-guardar']) ?>
+        <?= Html::button('◁ Volver atrás', [
+            'class' => 'btn-atras',
+            'onclick' => 'window.history.back();'
+        ]) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 </div>
+=======
+</div>
+>>>>>>> 57af4fdcde6c3bd0475cc01ac4bc873755458fb8
+=======
+</div>
+
+>>>>>>> aefa31f619207f38d018cf01a0f29acf8ad43d69

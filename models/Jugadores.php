@@ -85,4 +85,8 @@ class Jugadores extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Personajes::class, ['idjugadores' => 'idjugadores']);
     }
+    public static function getCount()
+    {
+    return self::find()->count();
+    }
 }

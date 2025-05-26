@@ -7,9 +7,8 @@ use yii\widgets\ActiveForm;
 /** @var app\models\jugadores $model */
 
 $this->title = 'Actualizar Jugador: ' . $model->idjugadores;
-
-
 ?>
+
 <style>
     body {
         background-color: #2e2e2e;
@@ -34,27 +33,38 @@ $this->title = 'Actualizar Jugador: ' . $model->idjugadores;
     }
 
     .btn-guardar {
-    background-color: #e91e63;
-    color: white;
-    font-weight: 600;
-    padding: 1rem 2rem;
-    border-radius: 1rem;
-    margin-top: 1.5rem;
-    transition: background 0.3s ease, transform 0.2s ease;
-    text-decoration: none;
-    font-size: 1.1rem;
-    border: none;
-    cursor: pointer;
-}
+        background-color: #e91e63;
+        color: white;
+        font-weight: 600;
+        padding: 1rem 2rem;
+        border-radius: 1rem;
+        transition: background 0.3s ease, transform 0.2s ease;
+        text-decoration: none;
+        font-size: 1.1rem;
+        border: none;
+        cursor: pointer;
+    }
 
-.btn-guardar:hover {
-    background-color: #c2185b;
-    transform: scale(1.05);
-}
-
-
-    .jugadores-update .btn:hover {
+    .btn-guardar:hover {
         background-color: #c2185b;
+        transform: scale(1.05);
+    }
+
+    .btn-atras {
+        background-color: #4caf50;
+        color: white;
+        font-weight: 600;
+        padding: 1rem 2rem;
+        border-radius: 1rem;
+        transition: background 0.3s ease, transform 0.2s ease;
+        text-decoration: none;
+        font-size: 1.1rem;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-atras:hover {
+        background-color: #388e3c;
         transform: scale(1.05);
     }
 
@@ -67,7 +77,7 @@ $this->title = 'Actualizar Jugador: ' . $model->idjugadores;
         font-size: 1rem;
         width: 100%;
         transition: background-color 0.3s ease;
-        height: 3.2rem; /* Aseguramos que ambos campos tengan la misma altura */
+        height: 3.2rem;
     }
 
     .form-control:focus {
@@ -88,7 +98,6 @@ $this->title = 'Actualizar Jugador: ' . $model->idjugadores;
         color: #d0d0d0;
     }
 
-    /* Estilo para el select del campo rol */
     select.form-control {
         background-color: #3a3a3a;
         color: #ffffff;
@@ -97,11 +106,10 @@ $this->title = 'Actualizar Jugador: ' . $model->idjugadores;
         padding: 0.8rem 1rem;
         border-radius: 0.5rem;
         width: 100%;
-        height: 3.2rem; /* Aseguramos que el select tenga la misma altura que el campo de texto */
+        height: 3.2rem;
         position: relative;
     }
 
-    /* Estilo para las opciones del select */
     select.form-control option {
         background-color: #3a3a3a;
         color: #ffffff;
@@ -112,9 +120,8 @@ $this->title = 'Actualizar Jugador: ' . $model->idjugadores;
         background-color: #555;
     }
 
-    /* Estilo para la flecha personalizada */
     select.form-control::-ms-expand {
-        display: none; /* Para navegadores de IE */
+        display: none;
     }
 
     select.form-control::after {
@@ -130,6 +137,13 @@ $this->title = 'Actualizar Jugador: ' . $model->idjugadores;
     .form-group {
         margin-bottom: 2rem;
     }
+
+    .botones-separados {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 2rem;
+    }
 </style>
 
 <div class="jugadores-update">
@@ -138,17 +152,25 @@ $this->title = 'Actualizar Jugador: ' . $model->idjugadores;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'nombre')->textInput(['maxlength' => true, 'placeholder' => 'Ingresa tu nombre']) ?>
+    <?= $form->field($model, 'nombre')->textInput([
+        'maxlength' => true,
+        'placeholder' => 'Ingresa tu nombre',
+        'class' => 'form-control'
+    ]) ?>
 
     <?= $form->field($model, 'rol')->dropDownList(
         ['jugador' => 'Jugador', 'master' => 'Master', 'NPC' => 'NPC'],
-        ['prompt' => 'Selecciona un rol']
+        ['prompt' => 'Selecciona un rol', 'class' => 'form-control']
     ) ?>
 
-    <div class="form-group" style="text-align: center;">
-        <?= Html::submitButton('💾 Actualizar', ['class' => 'btn']) ?>
+    <div class="botones-separados">
+        <?= Html::submitButton('💾 Actualizar', ['class' => 'btn-guardar']) ?>
+        <?= Html::button('◁ Volver atrás', ['class' => 'btn-atras', 'onclick' => 'window.history.back();']) ?>
     </div>
+
 
     <?php ActiveForm::end(); ?>
 
 </div>
+
+

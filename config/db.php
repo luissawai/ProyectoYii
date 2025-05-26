@@ -2,13 +2,10 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=juegosrol',
+    'dsn' => 'mysql:host=db;dbname=juegosrol',
     'username' => 'root',
     'password' => '',
     'charset' => 'utf8',
-
-    // Schema cache options (for production environment)
-    //'enableSchemaCache' => true,
-    //'schemaCacheDuration' => 60,
-    //'schemaCache' => 'cache',
 ];
+
+// Nota: cuando se use en docker cambiar a host=db y cuando no host=localhost

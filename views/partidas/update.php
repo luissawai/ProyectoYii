@@ -34,7 +34,7 @@ $this->title = 'Actualizar Partida: ' . $model->idpartidas;
     .btn-guardar, .btn-atras {
         display: inline-block;
         text-align: center;
-        text-decoration: none; /* Elimina subrayado de los enlaces */
+        text-decoration: none;
         border: none;
         font-size: 1.1rem;
         cursor: pointer;
@@ -54,19 +54,20 @@ $this->title = 'Actualizar Partida: ' . $model->idpartidas;
         background-color: #c2185b;
         transform: scale(1.05);
         color: white;
-        text-decoration: none; /* Elimina subrayado en hover */
+        text-decoration: none;
     }
 
     .btn-atras {
         background-color: #4caf50;
         color: white;
+        margin-left: 1rem;
     }
 
     .btn-atras:hover {
         background-color: #388e3c;
         transform: scale(1.05);
         color: white;
-        text-decoration: none; /* Elimina subrayado en hover */
+        text-decoration: none;
     }
 
     /* Estilos del formulario */
@@ -146,4 +147,6 @@ $this->title = 'Actualizar Partida: ' . $model->idpartidas;
         'model' => $model,
     ]);
     ?>
-</div>
+
+  </div>
+

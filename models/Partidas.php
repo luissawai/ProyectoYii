@@ -90,4 +90,8 @@ class Partidas extends \yii\db\ActiveRecord
     {
     return $this->hasOne(Juegos::class, ['idjuegos' => 'idjuegos']);
     }
+    public static function getCount()
+    {
+    return self::find()->count();
+    }
 }

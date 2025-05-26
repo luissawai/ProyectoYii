@@ -59,24 +59,48 @@ $this->title = 'Crea tu partida';
         margin-bottom: 2rem;
     }
 
-    .partidas-create .btn {
-        background-color: #e91e63;
-        color: white;
-        font-weight: 600;
-        padding: 1rem 2rem;
-        border-radius: 1rem;
-        margin-top: 1.5rem;
-        transition: background 0.3s ease, transform 0.2s ease;
-        text-decoration: none;
-        font-size: 1.1rem;
-        border: none;
-        cursor: pointer;
-    }
+    .btn-guardar, .btn-atras {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+}
 
-    .partidas-create .btn:hover {
-        background-color: #c2185b;
-        transform: scale(1.05);
-    }
+.btn-guardar {
+    background-color: #e91e63;
+    color: #ffffff;
+}
+
+.btn-guardar:hover {
+    background-color: #d81b60;
+    transform: scale(1.05);
+}
+
+.btn-atras {
+    background-color: #4CAF50; /* Verde */
+    color: #ffffff;
+}
+.btn-atras:hover {
+    background-color: #43a047; /* Verde un poco más oscuro al pasar el ratón */
+    transform: scale(1.05);
+}
+
+
+.btn-atras,
+.btn-atras:visited,
+.btn-atras:hover,
+.btn-atras:active {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+    
 
     .form-control {
         background-color: #3a3a3a;

@@ -1,4 +1,9 @@
 RewriteEngine on
-RewriteCond %{REQUEST_FILENAME} !-d
+
+# Si un archivo o directorio físico existe, no hacer nada
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule . index.php [L]
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirigir todo a index.php
+RewriteRule . index.php
+

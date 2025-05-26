@@ -2,149 +2,203 @@
 
 /** @var yii\web\View $this */
 
+use app\models\Personajes;
+use app\models\Partidas;
+use app\models\Jugadores;
+
 $this->title = 'Gestión de Juegos de Rol';
+
+// Obtener totales desde la base de datos
+$totalPersonajes = Personajes::find()->count();
+$totalPartidas = Partidas::find()->count();
+$totalJugadores = Jugadores::find()->count();
+
 ?>
 <div class="site-index">
 
     <!-- Primera sección: Imagen con texto superpuesto -->
-    <div class="hero-section text-center text-white">
-        <div class="hero-overlay">
+    <div class="section hero-section text-center text-white">
+        <div class="section-overlay">
             <h1 class="display-4">¡Lleva tus juegos de rol al siguiente nivel!</h1>
             <p class="lead">Organiza, gestiona y disfruta de tus partidas con nuestra plataforma.</p>
-            <a href="<?= Yii::$app->urlManager->createUrl(['site/register']); ?>" class="btn btn-purple-start btn-lg">Comenzar ahora</a>
+            <a href="<?= Yii::$app->urlManager->createUrl(['site/register']); ?>" class="btn btn-purple-start">
+                <span>Comenzar ahora</span>
+            </a>
         </div>
     </div>
 
-    <!-- Segunda sección: Tarjetas -->
+    <!-- Segunda sección: Personajes -->
+    <div class="section pj-section text-center text-white">
+        <div class="section-overlay">
+            <div class="col-md-12">
+                <h2 class="mb-4">¡No te olvides de tus personajes!</h2>
+                <p class="lead">Gestiona a los personajes de tus partidas de rol. Con <strong><?= Yii::$app->name ?></strong> tendrás a tu disposición sus nombres, la partida a la que pertenecen e incluso si es interpretado por un jugador o por ti.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tercera sección: Partidas -->
+    <div class="section game-section text-center text-white">
+        <div class="section-overlay">
+            <div class="col-md-12">
+                <h2 class="mb-4">Control total de tus partidas</h2>
+                <p class="lead">Texto sobre partidas</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cuarta sección: Jugadores -->
     <div class="container mt-5">
-        <h2 class="text-center mb-4">Explora nuestras funcionalidades</h2>
+        <div class="row align-items-center">
+            <div class="col-md-12 text-center">
+                <h2 class="mb-4">Gestión de jugadores</h2>
+                <p class="lead">Texto sobre jugadores</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección final: Tarjetas resumen -->
+    <div class="container mt-5 mb-5">
+        <h2 class="text-center mb-4">Resumen de la actividad</h2>
         <div class="row">
-            <!-- Tarjeta 1 -->
+            <!-- Tarjeta 1: Total Personajes -->
             <div class="col-md-4">
-                <div class="card">
+                <div class="card text-center">
                     <div class="card-body">
-                        <h5 class="card-title">Estadísticas de jugadores</h5>
-                        <p class="card-text">Consulta y analiza el rendimiento de cada jugador en tus partidas.</p>
-                        <a href="<?= Yii::$app->urlManager->createUrl(['site/estadisticas']); ?>" class="btn btn-primary">Ver más</a>
+                        <h5 class="card-title">Personajes creados</h5>
+                        <p class="display-4"><?= $totalPersonajes ?></p>
                     </div>
                 </div>
             </div>
-            <!-- Tarjeta 2 -->
+            <!-- Tarjeta 2: Total Partidas -->
             <div class="col-md-4">
-                <div class="card">
+                <div class="card text-center">
                     <div class="card-body">
-                        <h5 class="card-title">Calendario de partidas</h5>
-                        <p class="card-text">Organiza y consulta las fechas de tus próximas aventuras.</p>
-                        <a href="<?= Yii::$app->urlManager->createUrl(['site/calendario']); ?>" class="btn btn-primary">Ver más</a>
+                        <h5 class="card-title">Partidas creadas</h5>
+                        <p class="display-4"><?= $totalPartidas ?></p>
                     </div>
                 </div>
             </div>
-            <!-- Tarjeta 3 -->
+            <!-- Tarjeta 3: Total Jugadores -->
             <div class="col-md-4">
-                <div class="card">
+                <div class="card text-center">
                     <div class="card-body">
-                        <h5 class="card-title">Gestión de personajes</h5>
-                        <p class="card-text">Crea y administra personajes para tus campañas de rol.</p>
-                        <a href="<?= Yii::$app->urlManager->createUrl(['site/personajes']); ?>" class="btn btn-primary">Ver más</a>
+                        <h5 class="card-title">Jugadores registrados</h5>
+                        <p class="display-4"><?= $totalJugadores ?></p>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Tercera sección: Tabla de datos -->
-    <div class="container mt-5">
-        <h2 class="text-center mb-4">Últimos registros</h2>
-        <table class="table table-dark table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Jugador</th>
-                    <th scope="col">Partida</th>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Puntuación</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Juan Pérez</td>
-                    <td>Aventura en el bosque</td>
-                    <td>2025-05-07</td>
-                    <td>95</td>
-                </tr>
-                <tr>
-                    <td>María López</td>
-                    <td>El castillo perdido</td>
-                    <td>2025-05-06</td>
-                    <td>88</td>
-                </tr>
-                <tr>
-                    <td>Carlos García</td>
-                    <td>La cueva del dragón</td>
-                    <td>2025-05-05</td>
-                    <td>92</td>
-                </tr>
-            </tbody>
-        </table>
     </div>
 </div>
+
 <style>
-    /* Primera sección: Hero */
-    .hero-section {
-        background-image: url('<?= Yii::getAlias("@web/images/fondo-juego-mesa.jpg") ?>'); /* Genera la URL completa */
-        background-size: cover; /* Asegura que la imagen cubra toda la sección */
-        background-position: center; /* Centra la imagen */
+    /* Secciones generales (hero, personajes, partidas) */
+    .section {
+        background-size: cover;
+        background-position: center center;
         height: 450px;
-        width: 100% !important;/* Ocupa el 100% de la altura de la ventana */   
-     }
-    
-    .hero-overlay {
-        background-color: rgba(0, 0, 0, 0.6); /* Oscurece la imagen de fondo */
+        width: 100% !important;
+        position: relative;
+    }
+
+    /* Fondo oscurecido y centrado de las secciones */
+    .section-overlay {
+        background-color: rgba(0, 0, 0, 0.6);
         padding: 20px;
         border-radius: 10px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    /* Texto en secciones oscuras */
+    .text-white h1,
+    .text-white h2,
+    .text-white p {
+        color: white !important;
+    }
+
+    /* Imagen de fondo de la sección principal */
+    .hero-section {
+        background-image: url('<?= Yii::getAlias("@web/images/fondo-juego-mesa.jpg") ?>');
+    }
+
+    /* Imagen de fondo de la sección de personajes */
+    .pj-section {
+        background-image: url('<?= Yii::getAlias("@web/images/personajes.jpg") ?>');
+    }
+
+    /* Imagen de fondo de la sección de partidas (ajustada para que no se corte) */
+    .game-section {
+        background-image: url('<?= Yii::getAlias("@web/images/juegos.jpg") ?>');
+        background-position: center top;
+    }
+
+    /* -------------------------------------------
+       Botón romboide estrecho horizontalmente, sin bordes redondeados,
+       mantiene altura y texto blanco incluso con brillo al hover.
+       Centrado horizontalmente en su contenedor.
+       ------------------------------------------- */
+    .btn-purple-start {
+        position: relative;
+        display: inline-block;
+        background-color: #5a189a;
+        padding: 15px 10px; /* altura igual, menos ancho */
+        max-width: 180px;   /* ancho máximo para controlar longitud */
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 0; /* sin bordes redondeados */
+        overflow: hidden;
+        transform: skewX(-20deg); /* forma romboide */
+        transition: background-color 0.3s ease;
+        cursor: pointer;
         text-align: center;
-        height: 450px;
-        max-width: 100%; /* Limita el ancho del contenido */
+        white-space: nowrap; /* evita salto de línea en texto */
+        margin: 0 auto; /* centrar horizontalmente */
     }
 
-    .hero-section h1 {
-        padding-top: 50px;
-        font-size: 3rem; /* Tamaño grande para el título */
+    /* Corregir distorsión del texto dentro del botón */
+    .btn-purple-start span {
+        display: inline-block;
+        transform: skewX(20deg);
+        color: white;
         font-weight: bold;
-        margin-bottom: 20px;
-        color: white !important;
+        width: 100%;
     }
 
-    .hero-section p {
-        padding-top: 20px;
-        font-size: 1.5rem; /* Tamaño más grande para el texto descriptivo */
-        margin-bottom: 30px;
-        color: white !important;
+    /* Brillo inicial */
+    .btn-purple-start::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -75%;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(120deg, rgba(255,255,255,0.2), rgba(255,255,255,0.6), rgba(255,255,255,0.2));
+        transform: skewX(-20deg);
     }
 
-    .btn-purple {
-        background-color: #5a189a; /* Morado oscuro */
-        color: white;
-        border-radius: 50px;
-        padding: 15px 30px;
-        font-size: 1.2rem;
-        text-transform: uppercase;
+    /* Animación del brillo al hacer hover */
+    .btn-purple-start:hover::before {
+        animation: shimmer 1.2s ease forwards;
     }
 
-    .btn-purple-start{
-        background-color: #5a189a; /* Morado oscuro */
-        color: white;
-        border-radius: 50px;
-        padding: 15px 30px;
-        font-size: 1.2rem;
-        text-transform: uppercase;
+    /* Animación keyframes para brillo */
+    @keyframes shimmer {
+        0% { left: -75%; }
+        100% { left: 130%; }
     }
 
-    .btn-purple:hover {
-        background-color: #3c096c; /* Morado más oscuro al pasar el mouse */
-        color: white;
+    /* Cambio de color de fondo al hacer hover */
+    .btn-purple-start:hover {
+        background-color: #3c096c;
     }
 
-    /* Tarjetas */
+    /* -------------------------------------------
+       Estilos para tarjetas de resumen
+       ------------------------------------------- */
     .card {
         border: none;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -156,17 +210,13 @@ $this->title = 'Gestión de Juegos de Rol';
     }
 
     .card-title {
-        color: var(--secondary-color);
         font-weight: bold;
+        color: #5a189a;
     }
 
-    /* Tabla */
-    .table {
-        margin-top: 20px;
-    }
-
-    .table th,
-    .table td {
-        text-align: center;
+    .display-4 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #333;
     }
 </style>

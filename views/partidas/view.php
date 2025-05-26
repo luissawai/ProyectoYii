@@ -7,8 +7,7 @@ use yii\widgets\DetailView;
 /** @var app\models\partidas $model */
 
 $this->title = 'Partida #' . $model->idpartidas;
-$this->params['breadcrumbs'][] = ['label' => 'Partidas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+
 \yii\web\YiiAsset::register($this);
 ?>
 
