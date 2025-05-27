@@ -3,6 +3,7 @@
 namespace app\widgets;
 
 use Yii;
+echo \app\widgets\CookieConsent::widget();
 
 /**
  * Alert widget renders a message from session flash. All flash messages are displayed

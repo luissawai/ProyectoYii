@@ -18,6 +18,8 @@ use app\models\Jugadores;
 use app\models\Juegos;
 use app\models\Modulos;
 use app\models\User;
+use yii\helpers\VarDumper;
+use yii\web\Cookie;
 
 class SiteController extends Controller
 {
@@ -64,18 +66,19 @@ class SiteController extends Controller
         $totalPartidas = Partidas::find()->count();
         $totalJugadores = Jugadores::find()->count();
 
-        if (!Yii::$app->user->isGuest) {
-        // Usuario logueado - mostrar dashboard
-        return $this->render('dashboard');
-    }
-        // Pasar los datos a la vista
-        return $this->render('index', [
+        $params = [
             'totalPersonajes' => $totalPersonajes,
             'totalPartidas' => $totalPartidas,
             'totalJugadores' => $totalJugadores,
-        ]);
-    }
+            'mostrarConsentimiento' => !Yii::$app->request->cookies->has('consentimiento_cookies')
+        ];
 
+        if (!Yii::$app->user->isGuest) {
+            return $this->render('dashboard', $params);
+        }
+
+        return $this->render('index', $params);
+    }
     /**
      * Login action.
      *
@@ -175,5 +178,48 @@ class SiteController extends Controller
             'query' => $q,
             'results' => $results,
         ]);
+    }
+
+    public function actionConsentimientoCookies()
+    {
+        $request = Yii::$app->request;
+        if ($request->isPost) {
+            $data = json_decode($request->getRawBody(), true);
+            $cookies = Yii::$app->response->cookies;
+
+            $cookies->add(new \yii\web\Cookie([
+                'name' => 'consentimiento_cookies',
+                'value' => json_encode($data),
+                'expire' => time() + 365 * 24 * 60 * 60, // 1 año
+            ]));
+
+            return $this->asJson(['status' => 'ok']);
+        }
+
+        throw new \yii\web\BadRequestHttpException();
+    }
+    private function setCookiePreference($name, $value)
+    {
+        Yii::$app->response->cookies->add(new Cookie([
+            'name' => $name,
+            'value' => $value ? '1' : '0',
+            'expire' => time() + 86400 * 365,
+            'httpOnly' => true
+        ]));
+    }
+    // Método de depuración
+    public function actionDebugCookies()
+    {
+        if (!YII_DEBUG) {
+            return $this->redirect(['site/index']);
+        }
+
+        echo '<pre>';
+        echo "Estado actual de las cookies:\n";
+        VarDumper::dump(Yii::$app->request->cookies->toArray());
+        echo "\nCookie de consentimiento:\n";
+        VarDumper::dump(Yii::$app->request->cookies->get('consentimiento_cookies'));
+        echo '</pre>';
+        die();
     }
 }

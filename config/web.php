@@ -52,7 +52,9 @@ $config = [
                 'login' => 'site/login',
                 'logout' => 'site/logout',
                 'calendario/eventos' => 'calendario/eventos',
-                'calendario/guardar-evento' => 'calendario/guardar-evento'
+                'calendario/guardar-evento' => 'calendario/guardar-evento',
+                'site/politica-cookies' => 'site/politica-cookies',
+                'site/consentimiento-cookies' => 'site/consentimiento-cookies',
             ],
         ],
     ],

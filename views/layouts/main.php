@@ -189,6 +189,8 @@ AppAsset::register($this);
             </div>
         </div>
     </footer>
+    
+    <?= \app\widgets\CookieConsent::widget() ?>
 
     <?php $this->endBody() ?>
 </body>
