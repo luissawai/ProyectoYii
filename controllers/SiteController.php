@@ -64,6 +64,10 @@ class SiteController extends Controller
         $totalPartidas = Partidas::find()->count();
         $totalJugadores = Jugadores::find()->count();
 
+        if (!Yii::$app->user->isGuest) {
+        // Usuario logueado - mostrar dashboard
+        return $this->render('dashboard');
+    }
         // Pasar los datos a la vista
         return $this->render('index', [
             'totalPersonajes' => $totalPersonajes,

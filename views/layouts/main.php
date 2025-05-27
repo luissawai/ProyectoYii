@@ -29,223 +29,354 @@ AppAsset::register($this);
 </head>
 
 <body class="d-flex flex-column h-100">
-<?php $this->beginBody() ?>
+    <?php $this->beginBody() ?>
 
-<header>
-    <?php
-    NavBar::begin([
-        'brandLabel' => Html::img('@web/images/logo1.jpg', ['alt' => 'Logo', 'style' => 'height:80px;']),
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar navbar-expand-lg navbar-dark fixed-top',
-            'id' => 'main-header'
-        ],
-    ]);
+    <header>
+        <?php
+        NavBar::begin([
+            'brandLabel' => Html::img('@web/images/logo1.jpg', ['alt' => 'Logo', 'style' => 'height:100px;']),
+            'brandUrl' => Yii::$app->homeUrl,
+            'options' => [
+                'class' => 'navbar navbar-expand-lg navbar-dark fixed-top',
+                'id' => 'main-header'
+            ],
+        ]);
 
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav ml-auto align-items-center'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Personajes', 'url' => ['/personajes/index']],
-            ['label' => 'Clases', 'url' => ['/clases/index']],
-            ['label' => 'Juegos', 'url' => ['/juegos/index']],
-            ['label' => 'Jugadores', 'url' => ['/jugadores/index']],
-            ['label' => 'Modulos', 'url' => ['/modulos/index']],
-            ['label' => 'Partidas', 'url' => ['/partidas/index']],
-            ['label' => 'Sobre Nosotros', 'url' => ['/site/about']],
-            ['label' => 'Contacto', 'url' => ['/site/contacto']],
-            Yii::$app->user->isGuest ? (
-                [
-                    'label' => 'Login',
-                    'url' => ['/site/login'],
-                    'linkOptions' => ['class' => 'btn btn-purple btn-sm ml-3']
-                ]
-            ) : (
-                '<li class="nav-item">'
-                . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-outline-light btn-sm ml-3']
-                )
-                . Html::endForm()
-                . '</li>'
-            ),
-        ],
-    ]);
+        // Menú para usuarios logueados
+        if (!Yii::$app->user->isGuest) {
+            echo Nav::widget([
+                'options' => ['class' => 'navbar-nav ml-auto align-items-center'],
+                'items' => [
+                    ['label' => 'Dashboard', 'url' => ['/site/dashboard']],
+                    [
+                        'label' => 'Gestión',
+                        'items' => [
+                            [
+                                'label' => '<i class="fas fa-users"></i> Jugadores',
+                                'url' => ['/jugadores/index'],
+                                'encode' => false
+                            ],
+                            [
+                                'label' => '<i class="fas fa-dice-d20"></i> Partidas',
+                                'url' => ['/partidas/index'],
+                                'encode' => false
+                            ],
+                            [
+                                'label' => '<i class="fas fa-book"></i> Clases',
+                                'url' => ['/clases/index'],
+                                'encode' => false
+                            ],
+                            [
+                                'label' => '<i class="fas fa-gamepad"></i> Juegos',
+                                'url' => ['/juegos/index'],
+                                'encode' => false
+                            ],
+                            [
+                                'label' => '<i class="fas fa-scroll"></i> Módulos',
+                                'url' => ['/modulos/index'],
+                                'encode' => false
+                            ],
+                        ],
+                        'encode' => false,
+                    ],
+                    [
+                        'label' => '<span class="dropdown-icon-text"><i class="fas fa-user"></i>' .
+                            Html::encode(Yii::$app->user->identity->username) . '</span>',
+                        'items' => [
+                            [
+                                'label' => '<span class="dropdown-icon-text"><i class="fas fa-cog"></i>Perfil</span>',
+                                'url' => ['/user/profile'],
+                                'encode' => false
+                            ],
+                            [
+                                'label' => '<span class="dropdown-icon-text"><i class="fas fa-bell"></i>Notificaciones</span>',
+                                'url' => ['/user/notifications'],
+                                'encode' => false
+                            ],
+                            '<div class="dropdown-divider"></div>',
+                            [
+                                'label' => '<span class="dropdown-icon-text"><i class="fas fa-sign-out-alt"></i>Cerrar Sesión</span>',
+                                'url' => ['/site/logout'],
+                                'encode' => false,
+                                'linkOptions' => ['data-method' => 'post']
+                            ],
+                        ],
+                        'encode' => false,
+                    ],
+                ],
+            ]);
+        } else {
+            // Menú para usuarios no logueados
+            echo Nav::widget([
+                'options' => ['class' => 'navbar-nav ml-auto align-items-center'],
+                'items' => [
+                    ['label' => 'Home', 'url' => ['/site/index']],
+                    ['label' => 'Sobre Nosotros', 'url' => ['/site/about']],
+                    ['label' => 'Contacto', 'url' => ['/site/contacto']],
+                    [
+                        'label' => 'Login',
+                        'url' => ['/site/login'],
+                        'linkOptions' => ['class' => 'btn btn-purple btn-sm ml-3']
+                    ],
+                ],
+            ]);
+        }
 
-    // Barra de búsqueda
-    echo Html::beginForm(['/site/search'], 'get', ['class' => 'form-inline ml-3']);
-    echo Html::input('text', 'q', Yii::$app->request->get('q'), [
-        'class' => 'form-control mr-sm-2',
-        'placeholder' => 'Buscar...',
-        'aria-label' => 'Buscar'
-    ]);
-    echo Html::submitButton('Buscar', ['class' => 'btn btn-purple my-2 my-sm-0']);
-    echo Html::endForm();
+        NavBar::end();
+        ?>
+    </header>
 
-    NavBar::end();
-    ?>
-</header>
+    <main role="main" class="flex-shrink-0">
+        <div class="container-main mt-5 pt-5">
+            <?= Breadcrumbs::widget([
+                'links' => $this->params['breadcrumbs'] ?? [],
+            ]) ?>
+            <?= Alert::widget() ?>
+            <?= $content ?>
+        </div>
 
-<main role="main" class="flex-shrink-0">
-    <div class="container-main mt-5 pt-5">
-        <?= Breadcrumbs::widget([
-            'links' => $this->params['breadcrumbs'] ?? [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>
-    
-</main>
+    </main>
 
-<footer class="footer mt-4 py-4 navbar-expand-lg text-white h-100">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 text-center mb-3">
-                <?= Html::img('@web/images/logo1.jpg', ['alt' => 'Logo', 'style' => 'height:50px;']) ?>
-                <p class="mt-3">&copy; <?= date('Y') ?> Juego de la Mesa Redonda. Todos los derechos reservados.</p>
+    <footer class="footer mt-4 py-5">
+        <div class="container px-4">
+            <div class="row gy-4 gx-5">
+                <div class="footer-bar col-lg-4 col-md-6">
+                    <div class="footer-info">
+                        <?= Html::img('@web/images/logo1.jpg', ['alt' => 'Logo', 'class' => 'footer-logo mb-3']) ?>
+                        <p class="pb-3">
+                            <span class="fw-bold">App Gestión de Juegos de rol de mesa</span><br>
+                            Tu aventura comienza aquí<br>
+                            <span class="copyright">&copy; <?= date('Y') ?> Todos los derechos reservados.</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="footer-bar col-lg-4 col-md-6">
+                    <h5 class="footer-heading mb-3">EXPLORA</h5>
+                    <div class="footer-links d-flex flex-column">
+                        <?= Html::a('<i class="fas fa-dice-d20 me-2"></i>Proyectos', ['/site/projects']) ?>
+                        <?= Html::a('<i class="fas fa-scroll me-2"></i>Servicios', ['/site/services']) ?>
+                        <?= Html::a('<i class="fas fa-users me-2"></i>Sobre Nosotros', ['/site/about']) ?>
+                        <?= Html::a('<i class="fas fa-envelope me-2"></i>Contacto', ['/site/contacto']) ?>
+                    </div>
+                </div>
+
+                <div class="footer-bar col-lg-4 col-md-6">
+                    <h5 class="footer-heading mb-3">LEGAL</h5>
+                    <div class="footer-links d-flex flex-column">
+                        <?= Html::a('<i class="fas fa-shield-alt me-2"></i>Políticas de Seguridad', ['/site/privacy']) ?>
+                        <?= Html::a('<i class="fas fa-gavel me-2"></i>Términos de Servicio', ['/site/terms']) ?>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-md-4 text-center mb-3">
-                <h5>SECCIONES</h5>
-                <ul class="list-unstyled">
-                    <li><?= Html::a('Proyectos', ['/site/projects'], ['class' => 'text-white']) ?></li>
-                    <li><?= Html::a('Servicios', ['/site/services'], ['class' => 'text-white']) ?></li>
-                    <li><?= Html::a('Sobre Nosotros', ['/site/about'], ['class' => 'text-white']) ?></li>
-                    <li><?= Html::a('Contacto', ['/site/contacto'], ['class' => 'text-white']) ?></li>
-                </ul>
-            </div>
+            <hr class="footer-divider my-4">
 
-            <div class="col-md-4 text-center mb-3">
-                <h5>LEGAL</h5>
-                <ul class="list-unstyled">
-                    <li><?= Html::a('Políticas de Seguridad', ['/site/privacy'], ['class' => 'text-white']) ?></li>
-                    <li><?= Html::a('Términos de Servicio', ['/site/terms'], ['class' => 'text-white']) ?></li>
-                </ul>
+            <div class="row">
+                <div class="col-md-8">
+                    <p class="small mb-0">
+                        Explora un mundo de aventuras y fantasía con nuestra comunidad de jugadores.
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <div class="social-links text-center text-md-end pt-3 pt-md-0">
+                        <a href="mailto:contacto@tusitio.com" class="email"><i class="fas fa-envelope"></i></a>
+                        <a href="https://reddit.com" class="reddit"><i class="fab fa-reddit"></i></a>
+                        <a href="https://linkedin.com" class="linkedin"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com" class="github"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="text-center mt-4">
-            <a href="mailto:contacto@tusitio.com" class="text-white mx-2"><i class="fas fa-envelope"></i></a>
-            <a href="https://reddit.com" class="text-white mx-2"><i class="fab fa-reddit"></i></a>
-            <a href="https://linkedin.com" class="text-white mx-2"><i class="fab fa-linkedin"></i></a>
-            <a href="https://github.com" class="text-white mx-2"><i class="fab fa-github"></i></a>
-        </div>
-    </div>
-</footer>
+    </footer>
 
-<?php $this->endBody() ?>
+    <?php $this->endBody() ?>
 </body>
 
 </html>
 <?php $this->endPage() ?>
 
 <style>
-    html, body {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .container-main {
-        padding: 0;
-        margin: 0;
-    }
-
-    main {
-        flex: 1;
-    }
-
-    .footer {
-        background-color: rgb(31, 21, 34);
-        color: white;
-        font-size: 14px;
-        margin-bottom: 0;
-        padding: 20px 0;
-    }
-
+    /* Variables globales */
     :root {
         --primary-color: #080f19;
         --secondary-color: #f1c40f;
-        --background-color: #f5f0e1;
-        --pink-color: #ff007a;
+        --purple-color: #5a189a;
+        --dark-purple: #3c096c;
+        --footer-bg: rgb(31, 21, 34);
     }
 
+    /* Common container styles */
+    .navbar>.container,
+    .container-main,
+    .footer>.container {
+        max-width: 1650px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    /* Header styles */
     #main-header {
-        background-color: rgb(31, 21, 34);
-        padding: 10px 20px;
+        background-color: var(--footer-bg);
+        padding: 0;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+    }
+
+    .navbar {
+        margin: 0 auto;
+        padding: 0.5rem 0;
+    }
+
+    .navbar-brand {
+        padding: 0.5rem 0;
+    }
+
+    .navbar-brand img {
+        height: 80px;
+        transition: transform 0.3s ease;
     }
 
     .navbar-nav .nav-link {
         color: white;
         font-size: 16px;
-        margin-right: 15px;
+        margin: 0 15px;
         text-transform: uppercase;
+        padding: 0.5rem 1rem;
+        transition: color 0.3s ease;
     }
 
-    .navbar-nav .nav-link:hover {
-        color: var(--secondary-color);
-        text-decoration: underline;
+    .navbar-nav .nav-item i {
+        margin-right: 8px;
+        width: 20px;
+        text-align: center;
     }
 
-    .btn-purple {
-        background-color: #5a189a;
+    /* Footer styles */
+    .footer {
+        background-color: var(--footer-bg);
         color: white;
-        font-weight: bold;
-        border-radius: 5px;
-        padding: 8px 16px;
-        border: none;
-        text-transform: uppercase;
         font-size: 14px;
-        transition: background-color 0.3s ease, transform 0.2s ease;
+        padding: 4rem 0 2rem;
+        width: 100%;
     }
 
-    .btn-purple:hover {
-        background-color: #3c096c;
-        color: white;
-        text-decoration: none;
-        transform: scale(1.05);
+    .footer-bar {
+        padding: 0 1.5rem;
     }
 
-    .navbar-brand img {
-        height: 80px;
+    .footer-info {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
     }
 
-    .footer h5 {
-        font-size: 20px;
+    .footer-logo {
+        height: 60px;
+        width: 60px;
+    }
+
+    .footer-heading {
+        font-size: 1.2rem;
         font-weight: bold;
-        margin-bottom: 15px;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+        position: relative;
+        padding-bottom: 0.75rem;
     }
 
-    .footer ul {
-        padding: 0;
-        list-style: none;
+    .footer-heading::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50px;
+        height: 2px;
+        background-color: var(--purple-color);
     }
 
-    .footer ul li {
-        margin-bottom: 10px;
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
     }
 
-    .footer ul li a {
-        color: white;
+    .footer-links a {
+        color: rgba(255, 255, 255, 0.8);
         text-decoration: none;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
     }
 
-    .footer ul li a:hover {
-        color: var(--secondary-color);
-        text-decoration: underline;
+    .footer-links a i {
+        width: 24px;
+        margin-right: 12px;
+        text-align: center;
     }
 
-    .footer .text-center a {
-        font-size: 16px;
+    .footer-links a:hover {
         color: white;
-        margin: 0 10px;
-        text-decoration: none;
+        transform: translateX(5px);
     }
 
-    .footer .text-center a:hover {
-        color: var(--secondary-color);
+    .social-links {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+        margin-top: 1rem;
     }
-</style>
+
+    .social-links a {
+        width: 36px;
+        height: 36px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+        background-color: var(--purple-color);
+        transform: translateY(-3px);
+    }
+
+    .footer-divider {
+        margin: 3rem 0 2rem;
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    @media (max-width: 768px) {
+        #main-header {
+            padding: 0.5rem 1rem;
+        }
+
+        .navbar>.container,
+        .container-main,
+        .footer>.container {
+            padding: 0 1rem;
+        }
+
+        .footer-bar {
+            padding: 0 1rem;
+            text-align: center;
+        }
+
+        .footer-heading::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .footer-links a {
+            justify-content: center;
+        }
+
+        .social-links {
+            justify-content: center;
+        }
+    }
+</style> 
