@@ -30,6 +30,8 @@ AppAsset::register($this);
 
 <body class="d-flex flex-column h-100">
     <?php $this->beginBody() ?>
+    <!-- Agregar después del begin body -->
+    <div id="notification-container" class="notification-container"></div>
 
     <header>
         <?php
@@ -127,7 +129,7 @@ AppAsset::register($this);
     </header>
 
     <main role="main" class="flex-shrink-0">
-        <div class="container-main mt-5 pt-5">
+        <div class="container-main">
             <?= Breadcrumbs::widget([
                 'links' => $this->params['breadcrumbs'] ?? [],
             ]) ?>
@@ -137,7 +139,7 @@ AppAsset::register($this);
 
     </main>
 
-    <footer class="footer mt-4 py-5">
+    <footer class="footer py-5">
         <div class="container px-4">
             <div class="row gy-4 gx-5">
                 <div class="footer-bar col-lg-4 col-md-6">
@@ -189,7 +191,25 @@ AppAsset::register($this);
             </div>
         </div>
     </footer>
-    
+    <?php
+    $flash = Yii::$app->session->getAllFlashes();
+    if (!empty($flash)) {
+        $js = '';
+        foreach ($flash as $type => $messages) {
+            if (is_array($messages)) {
+                foreach ($messages as $message) {
+                    $title = isset($message['title']) ? $message['title'] : ucfirst($type);
+                    $msg = isset($message['message']) ? $message['message'] : $message;
+                    $js .= "showNotification('$title', '$msg', '$type');";
+                }
+            } else {
+                $js .= "showNotification('" . ucfirst($type) . "', '$messages', '$type');";
+            }
+        }
+        $this->registerJs($js);
+    }
+    ?>
+
     <?= \app\widgets\CookieConsent::widget() ?>
 
     <?php $this->endBody() ?>
@@ -215,7 +235,6 @@ AppAsset::register($this);
         max-width: 1650px;
         width: 100%;
         margin: 0 auto;
-        padding: 0 2rem;
     }
 
     /* Header styles */
@@ -223,6 +242,22 @@ AppAsset::register($this);
         background-color: var(--footer-bg);
         padding: 0;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        height: 100px;
+        /* Altura fija del header */
+    }
+
+    /* Main content styles */
+    main {
+        padding-top: 100px;
+        /* Debe ser igual a la altura del header */
+        min-height: calc(100vh - 100px);
+        /* 100vh - altura del header */
+        width: 100%;
+    }
+
+    .container-main {
+        max-width: 100%;
         width: 100%;
     }
 
@@ -381,4 +416,4 @@ AppAsset::register($this);
             justify-content: center;
         }
     }
-</style> 
+</style>
