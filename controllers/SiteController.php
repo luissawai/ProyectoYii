@@ -182,31 +182,36 @@ class SiteController extends Controller
 
     public function actionConsentimientoCookies()
     {
-        $request = Yii::$app->request;
-        if ($request->isPost) {
-            $data = json_decode($request->getRawBody(), true);
-            $cookies = Yii::$app->response->cookies;
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-            $cookies->add(new \yii\web\Cookie([
-                'name' => 'consentimiento_cookies',
-                'value' => json_encode($data),
-                'expire' => time() + 365 * 24 * 60 * 60, // 1 año
-            ]));
+        try {
+            if (\Yii::$app->request->isPost) {
+                $data = \Yii::$app->request->getRawBody();
+                $parsed = json_decode($data, true);
 
-            return $this->asJson(['status' => 'ok']);
+                if (!$parsed) {
+                    return ['success' => false, 'message' => 'Datos inválidos'];
+                }
+
+                $cookie = new \yii\web\Cookie([
+                    'name' => 'consentimiento_cookies',
+                    'value' => json_encode($parsed),
+                    'expire' => time() + 86400 * 365,
+                    'secure' => !YII_DEBUG,
+                    'httpOnly' => true,
+                ]);
+
+                \Yii::$app->response->cookies->add($cookie);
+                return ['success' => true];
+            }
+
+            return ['success' => false, 'message' => 'Método no permitido'];
+        } catch (\Exception $e) {
+            \Yii::error('Error al guardar cookies: ' . $e->getMessage());
+            return ['success' => false, 'message' => 'Error al guardar preferencias'];
         }
+    }
 
-        throw new \yii\web\BadRequestHttpException();
-    }
-    private function setCookiePreference($name, $value)
-    {
-        Yii::$app->response->cookies->add(new Cookie([
-            'name' => $name,
-            'value' => $value ? '1' : '0',
-            'expire' => time() + 86400 * 365,
-            'httpOnly' => true
-        ]));
-    }
     // Método de depuración
     public function actionDebugCookies()
     {
@@ -221,5 +226,15 @@ class SiteController extends Controller
         VarDumper::dump(Yii::$app->request->cookies->get('consentimiento_cookies'));
         echo '</pre>';
         die();
+    }
+
+    public function actionDashboard()
+    {
+    // Verificar que el usuario está autenticado
+    if (Yii::$app->user->isGuest) {
+        return $this->redirect(['site/login']);
+    }
+
+    return $this->render('dashboard');
     }
 }

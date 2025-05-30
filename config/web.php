@@ -51,6 +51,7 @@ $config = [
                 'register' => 'site/register', // ✅ Ahora está en el lugar correcto
                 'login' => 'site/login',
                 'logout' => 'site/logout',
+                'dashboard' => 'site/dashboard',
                 'calendario/eventos' => 'calendario/eventos',
                 'calendario/guardar-evento' => 'calendario/guardar-evento',
                 'site/politica-cookies' => 'site/politica-cookies',
