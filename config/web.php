@@ -14,6 +14,12 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+
+        'assetManager' => [
+            'appendTimestamp' => true, // Esto fuerza que cambie la URL del asset y no cachee el navegador
+            'linkAssets' => true,         // Esto hace symlinks en lugar de copiar (útil en Docker)
+        ],
+
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'A7iZvO4aXqcmTDL6sYBIoTygsMq4u7q5',

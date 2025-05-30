@@ -8,7 +8,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "browser-sync start --proxy 'localhost:8080' --files '**/*.php, assets/**/*.css, assets/**/*.js'"
+    "serve": "browser-sync start --proxy 'localhost:8080' --files '**/*.php, assets/**/*.css, assets/**/*.js'",
+    "dev": "browser-sync start --proxy 'localhost:8080' --files './views/**/*.php, ./assets/**/*.*, ./web/css/*.css, ./web/js/*.js'"
+
   },
 
   "repository": {
@@ -26,3 +28,4 @@
     "browser-sync": "^3.0.4"
   }
 }
+

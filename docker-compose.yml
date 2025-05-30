@@ -1,14 +1,18 @@
+version: '3.8'
 
 services:
   app:
     build: .
     ports:
       - "8080:80"
+      - "3000:3000"  # BrowserSync main port
+      - "3001:3001"  # BrowserSync UI port
     volumes:
       - .:/var/www/html
     container_name: php_app
     environment:
-      - COMPOSER_ALLOW_SUPERUSER=1
+      - BROWSER_SYNC_HOST=0.0.0.0
+      - BROWSER_SYNC_PORT=3000
     depends_on:
       - db
 
@@ -26,3 +30,4 @@ services:
 
 volumes:
   mysql_data:
+

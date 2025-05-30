@@ -86,14 +86,38 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        $this->layout = 'main';
-        $model = new LoginForm();
-
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
         }
 
-        $model->password = '';
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post())) {
+            // Add debugging
+            Yii::debug('Intento de login con: ' . print_r([
+                'username' => $model->username,
+                'password exists' => !empty($model->password),
+            ], true));
+
+            // Try to find the user first
+            $user = User::findByUsername($model->username);
+            Yii::debug('Usuario encontrado: ' . ($user ? 'Sí' : 'No'));
+
+            if ($user) {
+                Yii::debug('Datos del usuario: ' . print_r([
+                    'id' => $user->id,
+                    'username' => $user->username,
+                    'email' => $user->email,
+                    'password exists' => !empty($user->password),
+                ], true));
+            }
+
+            if ($model->login()) {
+                return $this->goBack();
+            } else {
+                Yii::error('Errores de login: ' . print_r($model->errors, true));
+            }
+        }
+
         return $this->render('login', [
             'model' => $model,
         ]);
@@ -124,19 +148,30 @@ class SiteController extends Controller
 
     public function actionRegister()
     {
-        $model = new \app\models\RegisterForm(); // o el modelo que estés usando
+        $model = new RegisterForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $user = new User();
             $user->username = $model->username;
             $user->email = $model->email;
-            $user->setPassword($model->password); // Asume que tienes este método
+
+            // Debug password setting
+            Yii::debug('Setting password for new user');
+            try {
+                $user->setPassword($model->password);
+                Yii::debug('Password hash generated successfully');
+            } catch (\Exception $e) {
+                Yii::error('Error setting password: ' . $e->getMessage());
+            }
+
             $user->generateAuthKey();
-            $user->generateAccessToken();
 
             if ($user->save()) {
+                Yii::debug('User saved successfully with ID: ' . $user->id);
                 Yii::$app->session->setFlash('success', 'Gracias por registrarte. Ahora puedes iniciar sesión.');
                 return $this->redirect(['site/login']);
+            } else {
+                Yii::error('User save errors: ' . print_r($user->errors, true));
             }
         }
 
@@ -230,11 +265,26 @@ class SiteController extends Controller
 
     public function actionDashboard()
     {
-    // Verificar que el usuario está autenticado
-    if (Yii::$app->user->isGuest) {
-        return $this->redirect(['site/login']);
+        // Verificar que el usuario está autenticado
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['site/login']);
+        }
+
+        return $this->render('dashboard');
     }
 
-    return $this->render('dashboard');
+    public function actionTestLogin()
+{
+    $user = User::findByUsername('prueba@prueba.com');
+    
+    if (!$user) {
+        echo "Usuario no encontrado";
+        return;
     }
+    
+    $valid = $user->validatePassword('123456789');
+    echo $valid ? "Contraseña válida" : "Contraseña inválida";
+    
+    Yii::debug('Contraseña almacenada: ' . $user->password);
+}
 }

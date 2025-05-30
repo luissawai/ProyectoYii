@@ -26,6 +26,7 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         'js/notifications.js', // Agregar esta línea
+        'js/login.js', 
 
     ];
     public $depends = [
