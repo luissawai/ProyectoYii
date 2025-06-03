@@ -52,7 +52,8 @@ $this->title = 'Bienvenido de nuevo';
                 <?= $form->field($model, 'rememberMe')->checkbox([
                     'template' => '<div class="custom-checkbox-wrapper">{input} {label}</div>',
                     'label' => 'Recordar datos',
-                    'class' => 'custom-checkbox'
+                    'class' => 'custom-checkbox',
+                    'id' => 'remember-checkbox'
                 ]) ?>
                 <?= Html::a('¿Olvidaste tu contraseña?', ['site/request-password-reset'], ['class' => 'forgot-link']) ?>
             </div>
@@ -342,6 +343,26 @@ $this->title = 'Bienvenido de nuevo';
         top: 50%;
         transform: translate(-50%, -50%);
     }
+
+    .custom-checkbox:checked {
+        background-color: var(--accent);
+        border-color: var(--accent);
+    }
+
+    .custom-checkbox:checked::after {
+        content: '✓';
+        position: absolute;
+        color: var(--text-primary);
+        font-size: 12px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .custom-checkbox:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(193, 161, 90, 0.2);
+    }
 </style>
 <?php
 $this->registerJs("
@@ -349,4 +370,38 @@ $this->registerJs("
         BrowserSync.socket.emit('browser:reload');
     }
 ");
+?>
+
+<?php
+$js = <<<JS
+document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.getElementById('login-form');
+    const usernameInput = document.querySelector('[name="LoginForm[username]"]');
+    const rememberCheckbox = document.querySelector('[name="LoginForm[rememberMe]"]');
+
+    // Cargar datos guardados si existen
+    if (localStorage.getItem('rememberedUser')) {
+        usernameInput.value = localStorage.getItem('rememberedUser');
+        rememberCheckbox.checked = true;
+    }
+
+    // Manejar el envío del formulario
+    loginForm.addEventListener('submit', function() {
+        if (rememberCheckbox.checked) {
+            localStorage.setItem('rememberedUser', usernameInput.value);
+        } else {
+            localStorage.removeItem('rememberedUser');
+        }
+    });
+
+    // Limpiar datos guardados si se desmarca la casilla
+    rememberCheckbox.addEventListener('change', function() {
+        if (!this.checked) {
+            localStorage.removeItem('rememberedUser');
+        }
+    });
+});
+JS;
+
+$this->registerJs($js);
 ?>

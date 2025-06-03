@@ -61,29 +61,36 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        // Obtener conteos desde la base de datos
+        $mostrarConsentimiento = !Yii::$app->request->cookies->has('consentimiento_cookies');
+
+        if (!Yii::$app->user->isGuest) {
+            $userId = Yii::$app->user->id;
+
+            $totalPersonajes = Personajes::find()->where(['user_id' => $userId])->count();
+            $totalPartidas = Partidas::find()->where(['user_id' => $userId])->count();
+            $totalJugadores = Jugadores::find()->where(['user_id' => $userId])->count();
+
+            return $this->render('dashboard', [
+                'totalPersonajes' => $totalPersonajes,
+                'totalPartidas' => $totalPartidas,
+                'totalJugadores' => $totalJugadores,
+                'mostrarConsentimiento' => $mostrarConsentimiento,
+            ]);
+        }
+
+        // Datos públicos si el usuario no está logueado
         $totalPersonajes = Personajes::find()->count();
         $totalPartidas = Partidas::find()->count();
         $totalJugadores = Jugadores::find()->count();
 
-        $params = [
+        return $this->render('index', [
             'totalPersonajes' => $totalPersonajes,
             'totalPartidas' => $totalPartidas,
             'totalJugadores' => $totalJugadores,
-            'mostrarConsentimiento' => !Yii::$app->request->cookies->has('consentimiento_cookies')
-        ];
-
-        if (!Yii::$app->user->isGuest) {
-            return $this->render('dashboard', $params);
-        }
-
-        return $this->render('index', $params);
+            'mostrarConsentimiento' => $mostrarConsentimiento,
+        ]);
     }
-    /**
-     * Login action.
-     *
-     * @return Response|string
-     */
+ 
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
@@ -168,8 +175,7 @@ class SiteController extends Controller
 
             if ($user->save()) {
                 Yii::debug('User saved successfully with ID: ' . $user->id);
-                Yii::$app->session->setFlash('success', 'Gracias por registrarte. Ahora puedes iniciar sesión.');
-                return $this->redirect(['site/login']);
+                return $this->redirect(['site/login']); 
             } else {
                 Yii::error('User save errors: ' . print_r($user->errors, true));
             }
@@ -274,17 +280,17 @@ class SiteController extends Controller
     }
 
     public function actionTestLogin()
-{
-    $user = User::findByUsername('prueba@prueba.com');
-    
-    if (!$user) {
-        echo "Usuario no encontrado";
-        return;
+    {
+        $user = User::findByUsername('prueba@prueba.com');
+
+        if (!$user) {
+            echo "Usuario no encontrado";
+            return;
+        }
+
+        $valid = $user->validatePassword('123456789');
+        echo $valid ? "Contraseña válida" : "Contraseña inválida";
+
+        Yii::debug('Contraseña almacenada: ' . $user->password);
     }
-    
-    $valid = $user->validatePassword('123456789');
-    echo $valid ? "Contraseña válida" : "Contraseña inválida";
-    
-    Yii::debug('Contraseña almacenada: ' . $user->password);
-}
 }
