@@ -126,5 +126,3 @@ $this->title = $model->nombre;
 
 
 
-
-

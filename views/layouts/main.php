@@ -30,7 +30,6 @@ AppAsset::register($this);
 
 <body class="d-flex flex-column h-100">
     <?php $this->beginBody() ?>
-    <!-- Agregar después del begin body -->
     <div id="notification-container" class="notification-container"></div>
 
     <header>
