@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\models\User;  // Asegúrate de importar el modelo User
 
 /**
  * This is the model class for table "jugadores".
@@ -37,10 +38,12 @@ class Jugadores extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre', 'rol'], 'required'], // 'nombre' y 'rol' son obligatorios
-            [['nombre'], 'unique', 'message' => 'Este nombre ya está registrado.'], // 'nombre' debe ser único
-            [['rol'], 'in', 'range' => $this->seleccionables, 'message' => 'El rol debe ser "jugador", "master" o "NPC".'], // Validación de 'rol'
-            [['nombre'], 'string', 'max' => 30], // Longitud máxima de 'nombre'
+            [['user_id', 'nombre'], 'required'],
+            [['user_id'], 'integer'],
+            [['nombre'], 'string', 'max' => 30],
+            [['rol'], 'string', 'max' => 20],
+            // Verifica que la relación exista en la tabla User
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -50,10 +53,17 @@ class Jugadores extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idjugadores' => 'ID Jugadores',
-            'nombre' => 'Nombre',
-            'rol' => 'Rol',
+            'idjugadores' => 'ID',
+            'user_id'     => 'Usuario',
+            'nombre'      => 'Nombre',
+            'rol'         => 'Rol',
         ];
+    }
+
+    // Relación con el modelo User
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     /**

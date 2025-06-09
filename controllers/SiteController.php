@@ -66,9 +66,29 @@ class SiteController extends Controller
         if (!Yii::$app->user->isGuest) {
             $userId = Yii::$app->user->id;
 
-            $totalPersonajes = Personajes::find()->where(['user_id' => $userId])->count();
-            $totalPartidas = Partidas::find()->where(['user_id' => $userId])->count();
-            $totalJugadores = Jugadores::find()->where(['user_id' => $userId])->count();
+            // Obtener el jugador asociado al usuario
+            $jugador = Jugadores::find()->where(['user_id' => $userId])->one();
+
+            if ($jugador) {
+                // Consultas corregidas usando las relaciones adecuadas
+                $totalPersonajes = Personajes::find()
+                    ->where(['idjugadores' => $jugador->idjugadores])
+                    ->count();
+
+                $totalPartidas = Partidas::find()
+                    ->joinWith('juegan')
+                    ->where(['juegan.idjugadores' => $jugador->idjugadores])
+                    ->count();
+
+                $totalJugadores = Jugadores::find()
+                    ->where(['user_id' => $userId])
+                    ->count();
+            } else {
+                // Si no tiene jugador asociado, establecer valores a 0
+                $totalPersonajes = 0;
+                $totalPartidas = 0;
+                $totalJugadores = 0;
+            }
 
             return $this->render('dashboard', [
                 'totalPersonajes' => $totalPersonajes,
@@ -90,7 +110,7 @@ class SiteController extends Controller
             'mostrarConsentimiento' => $mostrarConsentimiento,
         ]);
     }
- 
+
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
@@ -175,7 +195,7 @@ class SiteController extends Controller
 
             if ($user->save()) {
                 Yii::debug('User saved successfully with ID: ' . $user->id);
-                return $this->redirect(['site/login']); 
+                return $this->redirect(['site/login']);
             } else {
                 Yii::error('User save errors: ' . print_r($user->errors, true));
             }

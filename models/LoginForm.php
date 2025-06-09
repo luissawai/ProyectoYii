@@ -12,7 +12,11 @@ class LoginForm extends Model
     public $password;
     public $rememberMe = true;
 
-    private ?User $_user = null;
+    /**
+     * @var User|null
+     */
+    private $_user = null;
+
 
     public function rules()
     {
@@ -24,14 +28,14 @@ class LoginForm extends Model
     }
 
     public function validatePassword($password)
-{
-    try {
-        return Yii::$app->security->validatePassword($password, $this->password);
-    } catch (\Exception $e) {
-        Yii::error("Error validando contraseña: " . $e->getMessage());
-        return false;
+    {
+        try {
+            return Yii::$app->security->validatePassword($password, $this->password);
+        } catch (\Exception $e) {
+            Yii::error("Error validando contraseña: " . $e->getMessage());
+            return false;
+        }
     }
-}
 
 
 

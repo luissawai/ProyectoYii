@@ -17,7 +17,7 @@ $config = [
 
         'assetManager' => [
             'appendTimestamp' => true, // Esto fuerza que cambie la URL del asset y no cachee el navegador
-            'linkAssets' => true,         // Esto hace symlinks en lugar de copiar (útil en Docker)
+            'linkAssets' => false,         // Esto hace symlinks en lugar de copiar (útil en Docker)
         ],
 
         'request' => [
