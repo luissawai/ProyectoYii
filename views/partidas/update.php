@@ -1,4 +1,4 @@
-<?php  
+<?php   
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
@@ -6,6 +6,28 @@ use yii\helpers\Html;
 
 $this->title = 'Actualizar Partida: ' . $model->idpartidas;
 ?>
+
+<!-- Flatpickr CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<!-- Flatpickr JS + idioma español -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const config = {
+        altInput: true,
+        altFormat: "d/m/Y",
+        dateFormat: "Y-m-d",
+        allowInput: false,
+        locale: "es"
+    };
+
+    flatpickr("#fecha-inicio", config);
+    flatpickr("#fecha-fin", config);
+});
+</script>
 
 <style>
     body {
@@ -30,7 +52,6 @@ $this->title = 'Actualizar Partida: ' . $model->idpartidas;
         margin-bottom: 2rem;
     }
 
-    /* Estilo de los botones */
     .btn-guardar, .btn-atras {
         display: inline-block;
         text-align: center;
@@ -70,7 +91,6 @@ $this->title = 'Actualizar Partida: ' . $model->idpartidas;
         text-decoration: none;
     }
 
-    /* Estilos del formulario */
     .form-control {
         background-color: #3a3a3a;
         border: 1px solid #555;
@@ -90,6 +110,12 @@ $this->title = 'Actualizar Partida: ' . $model->idpartidas;
         color: #ffffff;
     }
 
+    .form-control[readonly] {
+        background-color: #3a3a3a;
+        color: #ffffff;
+        cursor: pointer;
+    }
+
     label {
         font-size: 1.1rem;
         color: #e0e0e0;
@@ -104,49 +130,14 @@ $this->title = 'Actualizar Partida: ' . $model->idpartidas;
     .form-group {
         margin-bottom: 2rem;
     }
-
-    input[type="date"] {
-        background-color: #3a3a3a;
-        border: 1px solid #555;
-        border-radius: 0.5rem;
-        color: #ffffff;
-        padding: 0.8rem 1rem;
-        font-size: 1rem;
-        width: 100%;
-        transition: background-color 0.3s ease;
-        height: 3.2rem;
-    }
-
-    input[type="date"]:focus {
-        background-color: #555;
-        border-color: #e91e63;
-        box-shadow: 0 0 5px rgba(233, 30, 99, 0.8);
-        color: #ffffff;
-    }
-
-    input[type="date"]::-webkit-calendar-picker-indicator {
-        filter: invert(1) brightness(2);
-        border: none;
-        background-color: transparent;
-    }
-
-    input[type="date"]::-moz-calendar-picker-indicator {
-        filter: invert(1) brightness(2);
-    }
-
-    input[type="date"]::-ms-calendar-picker-indicator {
-        filter: invert(1) brightness(2);
-    }
 </style>
 
 <div class="partidas-update">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php
-    echo $this->render('_form', [
+    <?= $this->render('_form', [
         'model' => $model,
-    ]);
-    ?>
+    ]) ?>
+</div>
 
-  </div>
 

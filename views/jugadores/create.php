@@ -7,6 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Crea tu jugador';
 ?>
+
 <style>
     body {
         background-color: #2e2e2e;
@@ -32,13 +33,15 @@ $this->title = 'Crea tu jugador';
 </style>
 
 <div class="jugadores-create">
-
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
+        'mostrarVolver' => true,
     ]) ?>
-
 </div>
+
+
+
 
 

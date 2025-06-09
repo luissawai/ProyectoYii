@@ -1,12 +1,11 @@
-<?php
-
+<?php  
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
 /** @var app\models\partidas $model */
 
-$this->title = 'Partida #' . $model->idpartidas;
+$this->title = 'Partida: ' . Html::encode($model->nombre);
 
 \yii\web\YiiAsset::register($this);
 ?>
@@ -85,16 +84,26 @@ $this->title = 'Partida #' . $model->idpartidas;
         'model' => $model,
         'options' => ['class' => 'table table-striped table-bordered'],
         'attributes' => [
-            'idpartidas',
-            'idjuegos',
             'nombre',
-            'fechainicio',
-            'fechafin',
+            [
+                'label' => 'Nombre del Juego',
+                'value' => $model->juego ? $model->juego->nombre : 'No asignado',
+            ],
+            [
+                'attribute' => 'fechainicio',
+                'format' => ['date', 'php:d/m/Y'],
+            ],
+            [
+                'attribute' => 'fechafin',
+                'format' => ['date', 'php:d/m/Y'],
+            ],
             'nombre_equipo',
         ],
     ]) ?>
 
 </div>
+
+
 
 
 

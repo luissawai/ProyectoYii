@@ -1,37 +1,32 @@
-<?php
+<?php 
 
 use app\models\jugadores;
 use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
 
 /** @var yii\web\View $this */
 /** @var app\models\jugadores $model */
 
 $this->title = 'Detalles del Jugador';
-/*$this->params['breadcrumbs'][] = $this->title; */
 ?>
+
 <style>
     body {
-        background-color: #2e2e2e; /* negro más claro */
+        background-color: #2e2e2e;
         color: #ffffff;
     }
 
-    /* Título más grande */
     .titulo-principal {
-        font-size: 2.5rem; /* Ajustamos el tamaño a 2.5rem */
+        font-size: 2.5rem;
         font-weight: 800;
-        color: #ffffff;
         text-align: center;
         margin-bottom: 2rem;
     }
 
     .jugadores-view {
         background-color: #2c2c2c;
-        padding: 4rem; /* Ajustamos el padding para mayor espacio */
+        padding: 3rem;
         border-radius: 1rem;
-        max-width: 1100px;
+        max-width: 850px;
         margin: 3rem auto;
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
         text-align: center;
@@ -47,8 +42,8 @@ $this->title = 'Detalles del Jugador';
         color: white;
         font-weight: 600;
         padding: 1rem 2rem;
-        border-radius: 1rem; /* Bordes más redondeados */
-        margin-left: 1rem;
+        border-radius: 1rem;
+        margin: 0 0.5rem;
         transition: background 0.3s ease, transform 0.2s ease;
         text-decoration: none;
         font-size: 1.1rem;
@@ -60,13 +55,14 @@ $this->title = 'Detalles del Jugador';
     }
 
     table {
-        width: 100%;
+        margin: 2rem auto;
+        width: 80%;
         border-collapse: collapse;
         background-color: #2f2f2f;
         border-radius: 0.5rem;
         overflow: hidden;
-        margin-top: 3rem;
-        border-spacing: 0; /* Asegura que no haya espacio entre las celdas */
+        border-spacing: 0;
+        border: 1px solid #444;
     }
 
     thead {
@@ -74,36 +70,23 @@ $this->title = 'Detalles del Jugador';
     }
 
     th, td {
-        padding: 1.5rem; /* Ajustamos el padding para hacer las celdas más simétricas */
-        text-align: center; /* Centramos el texto de las celdas */
-        line-height: 1.4; /* Ajustamos el line-height para un espaciado más compacto */
-        width: 33.33%; /* Aseguramos que cada celda tenga el mismo ancho */
+        padding: 1.2rem;
+        text-align: center;
+        font-size: 1.2rem;
+        border: 1px solid #444;
     }
 
     th {
         color: #ffffff;
         font-weight: 600;
-        font-size: 1.5rem; /* Aumentamos el tamaño de los encabezados */
     }
 
     td {
         color: #e0e0e0;
-        vertical-align: middle;
-        font-size: 1.2rem; /* Ajustamos el tamaño de las celdas */
-    }
-
-    /* Aseguramos que las celdas tengan el mismo tamaño y margen uniforme */
-    td {
-        margin: 0 auto; /* Centrar contenido de las celdas */
-    }
-
-    table, th, td {
-        border: 1px solid #444; /* Añadimos un borde para las celdas */
     }
 </style>
 
 <div class="jugadores-view">
-    <!-- Título más grande -->
     <h1 class="titulo-principal"><?= Html::encode($this->title) ?></h1>
 
     <div class="jugador-actions">
@@ -116,15 +99,15 @@ $this->title = 'Detalles del Jugador';
             <tr>
                 <th>Nombre</th>
                 <th>Rol</th>
-                <th>ID</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td><?= Html::encode($model->nombre) ?></td>
                 <td><?= Html::encode($model->rol) ?></td>
-                <td><?= Html::encode($model->idjugadores) ?></td>
             </tr>
         </tbody>
     </table>
 </div>
+
+

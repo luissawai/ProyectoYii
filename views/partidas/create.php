@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var app\models\partidas $model */
+/** @var app\models\Partidas $model */
 
 $this->title = 'Crea tu partida';
 ?>
@@ -19,23 +19,26 @@ $this->title = 'Crea tu partida';
 
 <!-- Flatpickr CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<!-- Flatpickr JS -->
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Inicializar Flatpickr para la fecha de inicio
-        flatpickr('#fecha-inicio', {
-            dateFormat: 'Y-m-d', // Formato de fecha
-            allowInput: true, // Permite escribir manualmente
-        });
 
-        // Inicializar Flatpickr para la fecha de fin
-        flatpickr('#fecha-fin', {
-            dateFormat: 'Y-m-d',
-            allowInput: true,
-        });
-    });
+<!-- Flatpickr JS + idioma español -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const config = {
+        altInput: true,
+        altFormat: "d/m/Y",
+        dateFormat: "Y-m-d",
+        allowInput: false,
+        locale: "es"
+    };
+
+    flatpickr("#fecha-inicio", config);
+    flatpickr("#fecha-fin", config);
+});
 </script>
+
 <style>
     body {
         background-color: #2e2e2e;
@@ -60,47 +63,45 @@ $this->title = 'Crea tu partida';
     }
 
     .btn-guardar, .btn-atras {
-    display: inline-block;
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 0.5rem;
-    text-decoration: none;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    border: none;
-}
+        display: inline-block;
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        border: none;
+    }
 
-.btn-guardar {
-    background-color: #e91e63;
-    color: #ffffff;
-}
+    .btn-guardar {
+        background-color: #e91e63;
+        color: #ffffff;
+    }
 
-.btn-guardar:hover {
-    background-color: #d81b60;
-    transform: scale(1.05);
-}
+    .btn-guardar:hover {
+        background-color: #d81b60;
+        transform: scale(1.05);
+    }
 
-.btn-atras {
-    background-color: #4CAF50; /* Verde */
-    color: #ffffff;
-}
-.btn-atras:hover {
-    background-color: #43a047; /* Verde un poco más oscuro al pasar el ratón */
-    transform: scale(1.05);
-}
+    .btn-atras {
+        background-color: #4CAF50;
+        color: #ffffff;
+    }
 
+    .btn-atras:hover {
+        background-color: #43a047;
+        transform: scale(1.05);
+    }
 
-.btn-atras,
-.btn-atras:visited,
-.btn-atras:hover,
-.btn-atras:active {
-    text-decoration: none;
-    color: #ffffff;
-}
-
-    
+    .btn-atras,
+    .btn-atras:visited,
+    .btn-atras:hover,
+    .btn-atras:active {
+        text-decoration: none;
+        color: #ffffff;
+    }
 
     .form-control {
         background-color: #3a3a3a;
@@ -136,4 +137,13 @@ $this->title = 'Crea tu partida';
     .form-group {
         margin-bottom: 2rem;
     }
+
+    /* Evitar fondo blanco en campos readonly */
+    .form-control[readonly] {
+        background-color: #3a3a3a;
+        color: #ffffff;
+        cursor: pointer;
+    }
 </style>
+
+

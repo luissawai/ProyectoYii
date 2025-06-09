@@ -8,158 +8,171 @@ use app\models\Jugadores;
 
 $this->title = 'Gestión de Juegos de Rol';
 
-// Obtener totales desde la base de datos
+// Estadísticas generales
 $totalPersonajes = Personajes::find()->count();
 $totalPartidas = Partidas::find()->count();
 $totalJugadores = Jugadores::find()->count();
 
+// Categorías para la sección de tarjetas con imagen de fondo
+$categorias = [
+    ['nombre' => 'Módulos', 'img' => 'modulos.jpg'],
+    ['nombre' => 'Partidas', 'img' => 'partidas.jpg'],
+    ['nombre' => 'Jugadores', 'img' => 'jugadores.jpg'],
+    ['nombre' => 'Juegos', 'img' => 'juegos.jpg'],
+    ['nombre' => 'Clases', 'img' => 'clases.jpg'],
+    ['nombre' => 'Personajes', 'img' => 'personajes.jpg'],
+];
 ?>
+
 <div class="site-index">
 
-    <!-- Primera sección: Imagen con texto superpuesto -->
-    <div class="section hero-section text-center text-white">
-        <div class="section-overlay">
-            <h1 class="display-4">¡Lleva tus juegos de rol al siguiente nivel!</h1>
-            <p class="lead">Organiza, gestiona y disfruta de tus partidas con nuestra plataforma.</p>
-            <a href="<?= Yii::$app->urlManager->createUrl(['site/register']); ?>" class="btn btn-purple-start">
+    <!-- HERO SECTION (Presentación principal con fondo e imagen) -->
+    <div class="section hero-section text-white text-center">
+        <div class="section-overlay d-flex flex-column justify-content-center align-items-center">
+            <h1 class="display-4 text-white">¡LLEVA TUS JUEGOS DE ROL AL SIGUIENTE NIVEL!</h1>
+            <p class="lead text-white">Organiza, gestiona y disfruta de tus partidas con nuestra plataforma.</p>
+            <a href="<?= Yii::$app->urlManager->createUrl(['site/register']); ?>" class="btn btn-purple-start mt-3">
                 <span>Comenzar ahora</span>
             </a>
         </div>
     </div>
 
-    <!-- Segunda sección: Personajes -->
-    <div class="section pj-section text-center text-white">
-        <div class="section-overlay">
-            <div class="col-md-12">
-                <h2 class="mb-4">¡No te olvides de tus personajes!</h2>
-                <p class="lead">Gestiona a los personajes de tus partidas de rol. Con <strong><?= Yii::$app->name ?></strong> tendrás a tu disposición sus nombres, la partida a la que pertenecen e incluso si es interpretado por un jugador o por ti.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tercera sección: Partidas -->
-    <div class="section game-section text-center text-white">
-        <div class="section-overlay">
-            <div class="col-md-12">
-                <h2 class="mb-4">Control total de tus partidas</h2>
-                <p class="lead">Texto sobre partidas</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Cuarta sección: Jugadores -->
-    <div class="container mt-5">
-        <div class="row align-items-center">
-            <div class="col-md-12 text-center">
-                <h2 class="mb-4">Gestión de jugadores</h2>
-                <p class="lead">Texto sobre jugadores</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Sección final: Tarjetas resumen -->
+    <!-- CATEGORÍAS (Tarjetas romboides con imagen de fondo) -->
     <div class="container mt-5 mb-5">
-        <h2 class="text-center mb-4">Resumen de la actividad</h2>
+        <div class="section-header text-white text-center mb-4">
+            <hr class="section-line">
+            <h2 class="text-uppercase d-inline mx-3">Categorías</h2>
+            <hr class="section-line">
+        </div>
+        <div class="categoria-wrapper d-flex justify-content-center flex-wrap">
+            <?php foreach ($categorias as $cat): ?>
+                <div class="categoria-card" style="background-image: url('<?= Yii::getAlias("@web/images/{$cat['img']}") ?>');">
+                    <div class="categoria-overlay">
+                        <h3 class="categoria-title"><?= $cat['nombre'] ?></h3>
+                        <p class="categoria-text">Lorem ipsum dolor sit amet.</p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <!-- INFORMACIÓN -->
+    <div class="section info-section text-center text-white">
+        <div class="section-overlay">
+            <div class="section-header mb-4">
+                <hr class="section-line">
+                <h2 class="text-uppercase d-inline mx-3">Información</h2>
+                <hr class="section-line">
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-4 mb-3">
+                    <div class="card bg-dark text-white p-3 h-100 text-center">
+                        <div class="mb-2"><i class="bi bi-person fs-1"></i></div>
+                        <h5 class="card-title">Crea una cuenta</h5>
+                        <p>Crea tu cuenta de manera gratuita. No es necesario descargar, ni instalar nada.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card bg-dark text-white p-3 h-100 text-center">
+                        <div class="mb-2"><i class="bi bi-grid fs-1"></i></div>
+                        <h5 class="card-title">No olvides tus partidas</h5>
+                        <p>Guarda tus partidas, personajes y jugadores para no perder el hilo.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card bg-dark text-white p-3 h-100 text-center">
+                        <div class="mb-2">🎲</div>
+                        <h5 class="card-title">Añade el juego que quieras</h5>
+                        <p>Desde Vampiro hasta D&D, guarda cualquier juego de rol.</p>
+                    </div>
+                </div>
+            </div>
+            <a href="<?= Yii::$app->urlManager->createUrl(['site/register']); ?>" class="btn btn-purple-start mt-4">
+                <span>Registrarse</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- TARJETAS DE RESUMEN -->
+    <div class="container mt-5 mb-5">
+        <div class="section-header text-white text-center mb-4">
+            <hr class="section-line">
+            <h2 class="text-uppercase d-inline mx-3">Actividad General</h2>
+            <hr class="section-line">
+        </div>
         <div class="row">
-            <!-- Tarjeta 1: Total Personajes -->
-            <div class="col-md-4">
-                <div class="card text-center">
+            <div class="col-md-4 mb-4">
+                <div class="card text-center shadow">
                     <div class="card-body">
                         <h5 class="card-title">Personajes creados</h5>
-                        <p class="display-4"><?= $totalPersonajes ?></p>
+                        <p class="display-4 resumen-number"><?= $totalPersonajes ?></p>
                     </div>
                 </div>
             </div>
-            <!-- Tarjeta 2: Total Partidas -->
-            <div class="col-md-4">
-                <div class="card text-center">
+            <div class="col-md-4 mb-4">
+                <div class="card text-center shadow">
                     <div class="card-body">
-                        <h5 class="card-title">Partidas creadas</h5>
-                        <p class="display-4"><?= $totalPartidas ?></p>
+                        <h5 class="card-title">Partidas registradas</h5>
+                        <p class="display-4 resumen-number"><?= $totalPartidas ?></p>
                     </div>
                 </div>
             </div>
-            <!-- Tarjeta 3: Total Jugadores -->
-            <div class="col-md-4">
-                <div class="card text-center">
+            <div class="col-md-4 mb-4">
+                <div class="card text-center shadow">
                     <div class="card-body">
-                        <h5 class="card-title">Jugadores registrados</h5>
-                        <p class="display-4"><?= $totalJugadores ?></p>
+                        <h5 class="card-title">Jugadores activos</h5>
+                        <p class="display-4 resumen-number"><?= $totalJugadores ?></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 
+<!-- ESTILOS PERSONALIZADOS -->
 <style>
-    /* Secciones generales (hero, personajes, partidas) */
-    .section {
+    body {
+        background-color: #1a1a1a;
+    }
+
+    /* HERO Section */
+    .hero-section {
+        background-image: url('<?= Yii::getAlias("@web/images/fondo-juego-mesa.jpg") ?>');
+        height: 350px;
         background-size: cover;
-        background-position: center center;
-        height: 450px;
-        width: 100% !important;
+        background-position: center;
         position: relative;
     }
 
-    /* Fondo oscurecido y centrado de las secciones */
     .section-overlay {
         background-color: rgba(0, 0, 0, 0.6);
-        padding: 20px;
-        border-radius: 10px;
+        padding: 2rem;
         height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
 
-    /* Texto en secciones oscuras */
-    .text-white h1,
-    .text-white h2,
-    .text-white p {
-        color: white !important;
-    }
-
-    /* Imagen de fondo de la sección principal */
-    .hero-section {
-        background-image: url('<?= Yii::getAlias("@web/images/fondo-juego-mesa.jpg") ?>');
-    }
-
-    /* Imagen de fondo de la sección de personajes */
-    .pj-section {
-        background-image: url('<?= Yii::getAlias("@web/images/personajes.jpg") ?>');
-    }
-
-    /* Imagen de fondo de la sección de partidas (ajustada para que no se corte) */
-    .game-section {
-        background-image: url('<?= Yii::getAlias("@web/images/juegos.jpg") ?>');
-        background-position: center top;
-    }
-
-    /* -------------------------------------------
-       Botón romboide estrecho horizontalmente, sin bordes redondeados,
-       mantiene altura y texto blanco incluso con brillo al hover.
-       Centrado horizontalmente en su contenedor.
-       ------------------------------------------- */
+    /* Botón */
     .btn-purple-start {
         position: relative;
         display: inline-block;
         background-color: #5a189a;
-        padding: 15px 10px; /* altura igual, menos ancho */
-        max-width: 180px;   /* ancho máximo para controlar longitud */
+        padding: 15px 10px;
+        max-width: 180px;
         font-size: 1.2rem;
         border: none;
-        border-radius: 0; /* sin bordes redondeados */
+        border-radius: 0;
         overflow: hidden;
-        transform: skewX(-20deg); /* forma romboide */
+        transform: skewX(-20deg);
         transition: background-color 0.3s ease;
         cursor: pointer;
         text-align: center;
-        white-space: nowrap; /* evita salto de línea en texto */
-        margin: 0 auto; /* centrar horizontalmente */
+        white-space: nowrap;
+        margin: 0 auto;
     }
 
-    /* Corregir distorsión del texto dentro del botón */
     .btn-purple-start span {
         display: inline-block;
         transform: skewX(20deg);
@@ -168,7 +181,6 @@ $totalJugadores = Jugadores::find()->count();
         width: 100%;
     }
 
-    /* Brillo inicial */
     .btn-purple-start::before {
         content: '';
         position: absolute;
@@ -180,43 +192,109 @@ $totalJugadores = Jugadores::find()->count();
         transform: skewX(-20deg);
     }
 
-    /* Animación del brillo al hacer hover */
     .btn-purple-start:hover::before {
         animation: shimmer 1.2s ease forwards;
     }
 
-    /* Animación keyframes para brillo */
     @keyframes shimmer {
         0% { left: -75%; }
         100% { left: 130%; }
     }
 
-    /* Cambio de color de fondo al hacer hover */
     .btn-purple-start:hover {
         background-color: #3c096c;
     }
 
-    /* -------------------------------------------
-       Estilos para tarjetas de resumen
-       ------------------------------------------- */
-    .card {
-        border: none;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease;
+    /* Sección Categorías */
+    .categoria-wrapper {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
-    .card:hover {
-        transform: translateY(-5px);
+    .categoria-card {
+        width: 180px;
+        height: 180px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        transition: transform 0.3s ease, z-index 0.3s ease;
+        cursor: pointer;
     }
 
-    .card-title {
+    .categoria-card:hover {
+        z-index: 2;
+        transform: scale(1.1);
+    }
+
+    .categoria-card.active {
+        transform: scale(1.3);
+        z-index: 3;
+    }
+
+    .categoria-overlay {
+        position: absolute;
+        inset: 0;
+        background-color: rgba(255, 255, 255, 0.1);
+        clip-path: inherit;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+        padding: 1rem;
+    }
+
+    .categoria-title {
+        font-size: 1.2rem;
         font-weight: bold;
-        color: #5a189a;
     }
 
-    .display-4 {
+    .categoria-text {
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        display: none;
+    }
+    .categoria-card.active .categoria-text {
+        display: block;
+    }
+
+    /* Encabezados de sección con líneas */
+    .section-header h2 {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .section-line {
+        display: inline-block;
+        width: 100px;
+        height: 2px;
+        background-color: #5a189a;
+        vertical-align: middle;
+    }
+
+    /* Tarjetas de resumen */
+    .resumen-number {
         font-size: 2.5rem;
         font-weight: bold;
-        color: #333;
+        color: #333 !important;
+    }
+
+    /* Info Section */
+    .info-section {
+        background-color: #1a1a1a;
+        padding-bottom: 3rem;
     }
 </style>
+
+<!-- JS para activar tarjetas -->
+<script>
+    document.querySelectorAll('.categoria-card').forEach(card => {
+        card.addEventListener('click', () => {
+            card.classList.toggle('active');
+        });
+    });
+</script>

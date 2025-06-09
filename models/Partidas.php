@@ -32,15 +32,15 @@ class Partidas extends \yii\db\ActiveRecord
      * {@inheritdoc}
      */
     public function rules()
-{
-    return [
-        [['nombre', 'fechainicio', 'fechafin', 'nombre_equipo', 'idjuegos'], 'required'],
-        [['fechainicio', 'fechafin'], 'date', 'format' => 'php:Y-m-d' , 'message' => 'El formato en el cual debes escribir la fecha es YYYY-MM-dd'],
-        [['fechainicio'], 'compare', 'compareAttribute' => 'fechafin', 'operator' => '<=', 'message' => 'La fecha de inicio debe ser menor o igual a la fecha de fin.'],
-        [['idjuegos'], 'exist', 'targetClass' => Juegos::class, 'targetAttribute' => 'idjuegos', 'message' => 'El juego no existe.'],
-        [['nombre', 'nombre_equipo'], 'string', 'max' => 30],
-    ];
-}
+    {
+        return [
+            [['nombre', 'fechainicio', 'fechafin', 'nombre_equipo', 'idjuegos'], 'required'],
+            [['fechainicio', 'fechafin'], 'date', 'format' => 'php:Y-m-d', 'message' => 'El formato en el cual debes escribir la fecha es dd/mm/YYYY'],
+            [['fechainicio'], 'compare', 'compareAttribute' => 'fechafin', 'operator' => '<=', 'message' => 'La fecha de inicio debe ser menor o igual a la fecha de fin.'],
+            [['idjuegos'], 'exist', 'targetClass' => Juegos::class, 'targetAttribute' => 'idjuegos', 'message' => 'El juego no existe.'],
+            [['nombre', 'nombre_equipo'], 'string', 'max' => 30],
+        ];
+    }
 
     /**
      * {@inheritdoc}
@@ -48,12 +48,12 @@ class Partidas extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idpartidas' => 'Idpartidas',
-            'idjuegos' => 'Idjuegos',
-            'nombre' => 'Nombre',
-            'fechainicio' => 'Fechainicio',
-            'fechafin' => 'Fechafin',
-            'nombre_equipo' => 'Nombre Equipo',
+            'idpartidas'     => 'ID',
+            'idjuegos'       => 'Nombre del juego',
+            'nombre'         => 'Nombre de la partida',
+            'fechainicio'    => 'Fecha de inicio',
+            'fechafin'       => 'Fecha de fin',
+            'nombre_equipo'  => 'Nombre del equipo',
         ];
     }
 
@@ -86,12 +86,15 @@ class Partidas extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Juegan::class, ['idpartidas' => 'idpartidas']);
     }
+
     public function getJuego()
     {
-    return $this->hasOne(Juegos::class, ['idjuegos' => 'idjuegos']);
+        return $this->hasOne(Juegos::class, ['idjuegos' => 'idjuegos']);
     }
+
     public static function getCount()
     {
-    return self::find()->count();
+        return self::find()->count();
     }
 }
+
